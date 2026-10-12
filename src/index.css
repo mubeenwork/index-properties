@@ -1,0 +1,31 @@
+/*
+  CSS layer order. Bootstrap sits below our own component CSS, so our styles
+  always win over Bootstrap's reboot. Tailwind utilities (written with the
+  `tw:` prefix, e.g. `tw:flex`) sit on top.
+*/
+@layer theme, base, bootstrap, components, utilities;
+
+@import "bootstrap/dist/css/bootstrap.min.css" layer(bootstrap);
+@import "tailwindcss" prefix(tw);
+
+@import "./styles/base.css";
+@import "./styles/preloader.css";
+@import "./styles/header.css";
+@import "./styles/hero.css";
+@import "./styles/listings.css";
+@import "./styles/sections.css";
+@import "./styles/footer.css";
+@import "./styles/motion.css";
+@import "./styles/scenes.css";
+
+/* Tailwind theme: the colours come from the CSS variables in styles/base.css,
+   so `tw:bg-bg`, `tw:text-ink`, `tw:text-brand` follow the light/dark theme. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg2: var(--bg2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --font-display: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+}

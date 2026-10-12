@@ -1,0 +1,102 @@
+@layer components {
+  /* ---------- Colour tokens: red / black / white, light and dark ---------- */
+  :root {
+    --bg: #ffffff; --bg2: #f5f5f5; --ink: #0b0b0b; --muted: #626262; --line: #e6e6e6;
+    --brand: #d0021b; --brand-hi: #0b0b0b;
+    --band: #0b0b0b; --foot: #0b0b0b; --foot-ink: #b5b5b5;
+    --shadow: 0 26px 46px -28px rgba(0, 0, 0, .45);
+    --f-display: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ease: cubic-bezier(.22, 1, .36, 1);
+    --ease-io: cubic-bezier(.65, 0, .35, 1);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0b0b; --bg2: #141414; --ink: #f4f4f4; --muted: #a3a3a3; --line: #262626;
+    --brand: #ef233c; --brand-hi: #ff4558;
+    --band: #b5121b; --foot: #000000; --foot-ink: #8a8a8a;
+    --shadow: none;
+    color-scheme: dark;
+  }
+
+  /* ---------- Base ---------- */
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: var(--f-body);
+    font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; margin: 0;
+  }
+  h1, h2, h3 { margin: 0; font-weight: 700; text-wrap: balance; letter-spacing: -.03em; }
+  p { margin: 0; }
+  a { color: inherit; }
+  button, input, select { font: inherit; color: inherit; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+  section[id] { scroll-margin-top: 70px; }
+  [hidden] { display: none !important; }
+
+  /* ---------- Shared UI ---------- */
+  .ix-container { max-width: 1160px; margin: 0 auto; padding-inline: 24px; }
+  .ix-sec { padding-block: 120px; }
+  .ix-sec.alt { background: var(--bg2); }
+  @media (max-width: 760px) { .ix-sec { padding-block: 80px; } .ix-container { padding-inline: 20px; } }
+
+  .ix-eyebrow { font-weight: 700; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
+  .ix-h2 { font-family: var(--f-display); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.12; }
+  .ix-h2 em { font-style: normal; color: var(--brand); }
+  .ix-lead { color: var(--muted); max-width: 52ch; }
+  .ix-note { font-size: .85rem; color: var(--muted); }
+  .ix-head { display: grid; gap: 14px; margin-bottom: 56px; max-width: 640px; }
+  .ix-head-row { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 56px; }
+  .ix-head-row > div:first-child { display: grid; gap: 14px; }
+  .ix-sr { position: absolute; left: -9999px; }
+
+  .ix-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    font-weight: 800; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+    padding: 16px 26px; border: 0; cursor: pointer; text-decoration: none;
+    background: var(--brand); color: #fff; white-space: nowrap;
+    transition: background .2s, box-shadow .25s;
+  }
+  .ix-btn:hover { background: var(--brand-hi); color: #fff; }
+  :root[data-theme="dark"] .ix-btn:hover { box-shadow: 0 0 0 4px rgba(239, 35, 60, .2), 0 0 26px rgba(239, 35, 60, .45); }
+  .ix-btn svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+  .ix-btn:hover svg { transform: translateX(4px); }
+
+  .ix-link {
+    font-weight: 800; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none; padding-bottom: 4px; background: none; border: 0; cursor: pointer; color: inherit;
+    background: linear-gradient(var(--brand), var(--brand)) 0 100% / 0% 2px no-repeat;
+    transition: background-size .35s var(--ease);
+  }
+  .ix-link:hover { background-size: 100% 2px; }
+
+  /* ---------- Motion ---------- */
+  @keyframes ix-up { from { transform: translateY(110%); } to { transform: translateY(0); } }
+  @keyframes ix-rvIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+  @keyframes ix-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ix-popIn { from { opacity: 0; transform: translateY(24px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes ix-prog { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* Content is visible by default. Reveal motion only plays once an element scrolls into view. */
+  .ix-rv.in { animation: ix-rvIn .8s var(--ease) both; animation-delay: calc(var(--d, 0) * 100ms); }
+
+  html.anim:not(.ready) .ix-hero h1 .l > span { transform: translateY(110%); }
+  html.anim.ready .ix-hero h1 .l > span { animation: ix-up 1s var(--ease) both; }
+  html.anim.ready .ix-hero h1 .l:nth-child(2) > span { animation-delay: .12s; }
+  html.anim:not(.ready) .ix-hf { opacity: 0; }
+  html.anim.ready .ix-hf { animation: ix-rvIn .9s var(--ease) both; animation-delay: calc(.35s + var(--d, 0) * 110ms); }
+
+  /* Circular reveal when the theme changes (View Transitions API) */
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+  ::view-transition-new(root) { animation: ix-vt .7s var(--ease-io); }
+  @keyframes ix-vt {
+    from { clip-path: circle(0 at var(--vx, 95%) var(--vy, 42px)); }
+    to { clip-path: circle(150vmax at var(--vx, 95%) var(--vy, 42px)); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html.anim .ix-hero h1 .l > span, html.anim .ix-hf { transform: none !important; opacity: 1 !important; }
+    html { scroll-behavior: auto; }
+  }
+}

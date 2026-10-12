@@ -1,0 +1,69 @@
+@layer components {
+  /* Services: photo tiles */
+  .ix-svc { position: relative; display: grid; align-content: end; aspect-ratio: 4 / 5; height: 100%; overflow: hidden; color: #fff; padding: 32px; text-decoration: none; background: #111; min-width: 0; }
+  @media (max-width: 767px) { .ix-svc { aspect-ratio: 4 / 3; } }
+  .ix-svc img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+  .ix-svc::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, .82) 100%); }
+  .ix-svc:hover img { transform: scale(1.08); }
+  .ix-svc:hover { color: #fff; }
+  .ix-svc .tx { position: relative; z-index: 2; display: grid; gap: 10px; }
+  .ix-svc h3 { font-size: 1.9rem; font-weight: 800; line-height: 1.1; }
+  .ix-svc p { color: rgba(255, 255, 255, .85); font-size: .98rem; max-width: 34ch; }
+  .ix-svc .bar { display: block; height: 3px; width: 44px; background: var(--brand); transition: width .5s var(--ease); }
+  .ix-svc:hover .bar { width: 100%; }
+
+  /* About */
+  .ix-portrait { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--bg2); }
+  .ix-portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .ix-portrait .cap { position: absolute; left: 0; bottom: 28px; background: var(--ink); color: var(--bg); padding: 12px 20px; display: grid; z-index: 2; }
+  .ix-portrait .cap small { font-weight: 700; font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
+  .ix-portrait .cap strong { font-weight: 700; font-size: 1.25rem; }
+  .ix-portrait .panel { position: absolute; inset: 0; z-index: 3; background: var(--brand); clip-path: inset(0 0 0 0); transition: clip-path 1.2s var(--ease-io); }
+  .ix-portrait.in .panel { clip-path: inset(0 0 0 100%); visibility: hidden; transition: clip-path 1.2s var(--ease-io), visibility 0s 1.2s; }
+  .ix-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .ix-stats div { display: grid; gap: 4px; border-top: 2px solid var(--ink); padding-top: 16px; }
+  .ix-stats b { font-weight: 800; font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.03em; font-variant-numeric: lining-nums tabular-nums; }
+  .ix-stats span { color: var(--muted); font-size: .9rem; }
+
+  /* Neighbourhoods banner */
+  .ix-banner { position: relative; color: #fff; overflow: hidden; background: #111; }
+  .ix-banner > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+  .ix-banner::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(0, 0, 0, .78), rgba(0, 0, 0, .35)); }
+  .ix-banner .ix-container { position: relative; z-index: 2; padding-block: 120px; display: grid; gap: 40px; }
+  @media (max-width: 760px) { .ix-banner .ix-container { padding-block: 80px; } }
+  .ix-banner .ix-eyebrow { color: #fff; opacity: .8; }
+  .ix-banner .ix-h2 em { color: #ff3347; }
+  .ix-cities { display: flex; flex-wrap: wrap; gap: 12px; max-width: 760px; }
+  .ix-city { border: 1px solid rgba(255, 255, 255, .6); background: rgba(0, 0, 0, .2); color: #fff; padding: 14px 26px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: .9rem; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: background .25s, border-color .25s, transform .3s var(--ease); }
+  .ix-city:hover { background: var(--brand); border-color: var(--brand); transform: translateY(-3px); }
+
+  /* Testimonials */
+  .ix-quote { max-width: 860px; margin: 0 auto; text-align: center; display: grid; gap: 32px; justify-items: center; }
+  .ix-quote .mark { font-size: 6rem; font-weight: 800; line-height: .8; color: var(--brand); height: 44px; }
+  .ix-qs { display: grid; width: 100%; }
+  .ix-q { grid-area: 1 / 1; display: grid; gap: 22px; opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease), visibility .6s; }
+  .ix-q.on { opacity: 1; visibility: visible; transform: none; }
+  .ix-q blockquote { margin: 0; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.5; font-weight: 600; letter-spacing: -.02em; }
+  .ix-q cite { font-style: normal; font-weight: 700; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .ix-dots { display: flex; gap: 10px; }
+  .ix-dots button { width: 32px; height: 4px; border: 0; padding: 0; background: var(--line); cursor: pointer; transition: background .3s; }
+  .ix-dots button[aria-current="true"] { background: var(--brand); }
+
+  /* Contact band */
+  .ix-cta { background: var(--band); color: #fff; }
+  .ix-cta .ix-container { padding-block: 110px; }
+  @media (max-width: 991px) { .ix-cta .ix-container { padding-block: 80px; } }
+  .ix-cta .ix-eyebrow { color: #fff; opacity: .75; }
+  .ix-cta .ix-h2 em { color: #ef233c; }
+  :root[data-theme="dark"] .ix-cta .ix-h2 em { color: #0b0b0b; }
+  .ix-cta p { opacity: .8; max-width: 44ch; }
+  .ix-cform { display: grid; gap: 12px; }
+  .ix-cform .row-in { display: flex; flex-wrap: wrap; gap: 12px; }
+  .ix-cform input { flex: 1 1 200px; border: 0; border-bottom: 2px solid rgba(255, 255, 255, .4); background: transparent; color: #fff; padding: 14px 2px; font-weight: 600; outline: none; min-width: 0; transition: border-color .2s; }
+  .ix-cform input::placeholder { color: rgba(255, 255, 255, .6); }
+  .ix-cform input:focus { border-bottom-color: #fff; }
+  .ix-cform .ix-btn { background: #fff; color: #0b0b0b; justify-self: start; margin-top: 12px; }
+  .ix-cform .ix-btn:hover { background: #ef233c; color: #fff; box-shadow: none; }
+  :root[data-theme="dark"] .ix-cform .ix-btn:hover { background: #0b0b0b; }
+  .ix-ok { font-weight: 700; }
+}

@@ -1,0 +1,45 @@
+@layer components {
+  /* ---------- Section ease-in (SectionTransition.jsx) ---------- */
+  .ix-sx { position: relative; transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .ix-sx.pre { opacity: 0; transform: translateY(44px); }
+  .ix-sx::before {
+    content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 3px; z-index: 5;
+    background: var(--brand); pointer-events: none; opacity: 0; transform: scaleX(0); transform-origin: 0 50%;
+  }
+  .ix-sx.in::before { animation: ix-sweep 1.5s var(--ease-io) both; }
+  @keyframes ix-sweep {
+    0% { transform: scaleX(0); opacity: 1; }
+    65% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 0; }
+  }
+
+  /* ---------- Custom cursor (Cursor.jsx) ---------- */
+  html.ix-cursor-on, html.ix-cursor-on * { cursor: none !important; }
+  html.ix-cursor-on input, html.ix-cursor-on select, html.ix-cursor-on textarea, html.ix-cursor-on option { cursor: auto !important; }
+
+  /* the cursor already says "View" on cards, so the "Quick view" pill is not needed */
+  html.ix-cursor-on .ix-qv { display: none; }
+
+  .ix-cursor, .ix-dot { position: fixed; left: 0; top: 0; z-index: 3000; pointer-events: none; opacity: 0; transition: opacity .25s; will-change: transform; }
+  .ix-cursor.show, .ix-dot.show { opacity: 1; }
+  .ix-cursor[data-state="native"], .ix-dot[data-state="native"] { opacity: 0; }
+  .ix-dot[data-state="view"] { opacity: 0; }
+
+  .ix-ring {
+    position: absolute; left: 0; top: 0; width: 38px; height: 38px; margin: -19px 0 0 -19px;
+    border: 1.5px solid var(--brand); border-radius: 50%; display: grid; place-items: center;
+    transition: width .4s var(--ease), height .4s var(--ease), margin .4s var(--ease), background .3s, border-color .3s, transform .25s var(--ease);
+  }
+  .ix-cursor[data-state="link"] .ix-ring { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: color-mix(in srgb, var(--brand) 16%, transparent); }
+  .ix-cursor[data-state="view"] .ix-ring { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: var(--brand); border-color: var(--brand); }
+  .ix-cursor.down .ix-ring { transform: scale(.82); }
+  .ix-ring .label { font-weight: 800; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #fff; opacity: 0; transform: scale(.8); transition: opacity .25s, transform .35s var(--ease); }
+  .ix-cursor[data-state="view"] .ix-ring .label { opacity: 1; transform: none; }
+
+  .ix-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--brand); transition: opacity .2s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ix-sx, .ix-sx.pre { opacity: 1; transform: none; }
+    .ix-sx::before { display: none; }
+  }
+}

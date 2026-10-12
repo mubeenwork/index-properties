@@ -1,0 +1,23 @@
+@layer components {
+  .ix-foot { background: var(--foot); color: var(--foot-ink); padding-block: 72px 32px; }
+  :root[data-theme="dark"] .ix-foot { border-top: 1px solid var(--line); }
+  .ix-foot .top { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .ix-foot .ix-logo { color: #fff; }
+  .ix-foot ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 28px; flex-wrap: wrap; font-weight: 600; }
+  .ix-foot a { text-decoration: none; }
+  .ix-foot a:hover { color: #fff; }
+  .ix-foot .contact { display: grid; gap: 4px; font-size: .92rem; }
+  .ix-giant { font-weight: 800; font-size: clamp(4.5rem, 19vw, 16rem); line-height: .9; letter-spacing: -.04em; color: #fff; display: flex; margin-block: 56px 28px; overflow: hidden; padding-bottom: .06em; }
+  .ix-giant span { display: inline-block; }
+  .ix-giant em { font-style: normal; color: #ef233c; }
+  .ix-foot.in .ix-giant span { animation: ix-up .9s var(--ease) both; animation-delay: calc(var(--i) * 70ms); }
+  .ix-legal { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .78rem; border-top: 1px solid #2a2a2a; padding-top: 22px; }
+  .ix-legal p { max-width: 78ch; }
+  .ix-legal a { text-decoration: underline; }
+  .ix-legal button { background: none; border: 1px solid #444; color: inherit; padding: 6px 12px; cursor: pointer; font-weight: 700; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+  .ix-legal button:hover { border-color: #ef233c; color: #fff; }
+
+  .ix-wa { position: fixed; right: 22px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 40; width: 56px; height: 56px; border-radius: 50%; background: #1f9d55; color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(0, 0, 0, .5); transition: transform .3s var(--ease); }
+  .ix-wa:hover { transform: scale(1.08); color: #fff; }
+  .ix-wa svg { width: 27px; height: 27px; }
+}
