@@ -43,3 +43,16 @@
     .ix-sx::before { display: none; }
   }
 }
+
+@layer components {
+  .ix-dot { background: #111318; border: 1px solid #ffffffd9; width: 10px; height: 10px; margin: -5px 0 0 -5px; box-shadow: 0 0 8px #ffffffa6,0 0 16px #11131840; }
+  .ix-ring { width: 30px; height: 30px; margin: -15px 0 0 -15px; border: 1px solid #17191d80; background: #11131806; box-shadow: 0 0 0 1px #ffffff55,0 0 14px #ffffff40; }
+  .ix-cursor[data-state="link"] .ix-ring { width: 44px; height: 44px; margin: -22px 0 0 -22px; background: #11131812; }
+  .ix-cursor[data-state="view"] .ix-ring { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: #111318eb; border-color: #ffffff99; box-shadow: 0 0 20px #ffffff40; }
+  .ix-ring .label { font-size: .6rem; letter-spacing: .06em; }
+  html.ix-cursor-on [contenteditable="true"] { cursor: text !important; }
+  @media (prefers-reduced-motion:reduce), (pointer:coarse) {
+    html.ix-cursor-on,html.ix-cursor-on * { cursor: auto !important; }
+    .ix-dot,.ix-cursor { display: none; }
+  }
+}

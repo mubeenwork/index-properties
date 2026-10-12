@@ -17,6 +17,12 @@
 @import "./styles/footer.css";
 @import "./styles/motion.css";
 @import "./styles/scenes.css";
+@import "./styles/redesign.css";
+@import "./styles/identity.css";
+@import "./styles/homepage.css";
+@import "./styles/editorial.css";
+@import "./styles/ambient-motion.css";
+@import "./styles/cursor.css";
 
 /* Tailwind theme: the colours come from the CSS variables in styles/base.css,
    so `tw:bg-bg`, `tw:text-ink`, `tw:text-brand` follow the light/dark theme. */

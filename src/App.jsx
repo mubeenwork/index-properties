@@ -5,8 +5,8 @@ import Preloader from './components/Preloader'
 import Header from './components/Header'
 import HeroScroll from './components/HeroScroll'
 import Statement from './components/Statement'
+import { BuyerPrograms, SoldListings, BuyerSellerTools, Team, JoinUs, Reports } from './components/HomepageSections'
 import Listings from './components/Listings'
-import Services from './components/Services'
 import About from './components/About'
 import Neighbourhoods from './components/Neighbourhoods'
 import Testimonials from './components/Testimonials'
@@ -14,7 +14,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import SectionTransition from './components/SectionTransition'
-import Cursor from './components/Cursor'
+
 
 export default function App() {
   const { toggle } = useTheme()
@@ -49,22 +49,27 @@ export default function App() {
       <Preloader key={introKey} onReady={introDone} />
       <Header onToggleTheme={toggle} onNavigate={navigate} />
       <main id="top">
-        {/* Pinned hero: scroll through it and the INDEX wordmark carries you into the page */}
+        {/* Architectural hero with natural page scrolling */}
         <HeroScroll onSearch={showListings} onSell={() => scrollToId('contact')} />
         <Statement />
         {/* Each section eases in as a whole when you reach it (scroll or menu click) */}
         <SectionTransition>
           <Listings filters={filters} onFilters={setFilters} onContact={() => scrollToId('contact')} />
         </SectionTransition>
-        <SectionTransition><Services /></SectionTransition>
-        <SectionTransition><About /></SectionTransition>
         <SectionTransition><Neighbourhoods onPick={(city) => showListings({ city })} /></SectionTransition>
+        <SectionTransition><BuyerSellerTools /></SectionTransition>
+        <SectionTransition><BuyerPrograms /></SectionTransition>
+        <SectionTransition><SoldListings /></SectionTransition>
+        <SectionTransition><About /></SectionTransition>
+        <SectionTransition><Team /></SectionTransition>
         <SectionTransition><Testimonials /></SectionTransition>
+        <SectionTransition><JoinUs /></SectionTransition>
+        <SectionTransition><Reports /></SectionTransition>
         <SectionTransition><Contact /></SectionTransition>
       </main>
       <Footer onReplay={replayIntro} />
       <WhatsAppButton />
-      <Cursor />
+
     </>
   )
 }

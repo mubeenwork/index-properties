@@ -13,6 +13,10 @@ export const seg = (p, a, b) => clamp((p - a) / (b - a))
 export const ease = (t) => t * t * (3 - 2 * t)
 
 export function scrollToId(id) {
+  if (id === 'top') {
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
+    return
+  }
   const el = document.getElementById(id)
   if (!el) return
   el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' })

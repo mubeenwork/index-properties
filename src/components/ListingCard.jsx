@@ -28,13 +28,13 @@ export default function ListingCard({ item, index, saved, onToggleSave, onOpen, 
           <HeartIcon />
         </button>
         <span className="ix-qv">Quick view</span>
-        <span className="ix-price">{formatPrice(item.price)}</span>
+
       </div>
 
       <div className="ix-card-info">
-        <h3 className="ix-ttl">{item.title}</h3>
+        <p className="ix-card-price">{formatPrice(item.price)} <span>CAD</span></p><h3 className="ix-ttl">{item.title}</h3>
         <span className="ix-addr"><PinIcon />{item.area}, {item.city}</span>
-        <div className="ix-spec">
+        <p className="ix-card-description">{item.desc}</p><div className="ix-spec">
           <span><BedIcon />{item.beds}</span>
           <span><BathIcon />{item.baths}</span>
           <span><AreaIcon />{item.sqft.toLocaleString('en-CA')} sq ft</span>

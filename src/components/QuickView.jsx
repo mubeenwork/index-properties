@@ -12,7 +12,7 @@ export default function QuickView({ item, show, saved, onHide, onToggleSave, onB
           <div className="ix-qv-img"><img src={item.img} alt={`${item.area}, ${item.city}`} /></div>
           <div className="ix-qv-body">
             <span className={`ix-status ${item.hot ? 'hot' : ''}`}>{item.status}</span>
-            <h3 id="qv-price">{formatPrice(item.price)}</h3>
+            <h3 id="qv-price">{formatPrice(item.price)} <small>CAD</small></h3>
             <p className="ix-addr"><PinIcon />{item.title} · {item.area}, {item.city}</p>
             <div className="ix-facts">
               <div><b>{item.beds}</b><span>Beds</span></div>

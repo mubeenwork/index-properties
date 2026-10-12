@@ -1,0 +1,98 @@
+/* Index's own visual language: address labels, sharp frames and red wayfinding. */
+@layer components {
+  :root { --bg: #fff; --bg2: #f3f3f3; --ink: #18191c; --muted: #666870; --line: #dedee1; }
+  :root[data-theme="dark"] { --bg: #111215; --bg2: #1c1d21; --ink: #f4f4f5; --muted: #b0b1b9; --line: #35363d; }
+  .ix-h2 { font-weight: 650; letter-spacing: -.05em; }
+  .ix-h2 em { font-style: normal; color: var(--muted); }
+  .ix-eyebrow::before { content: ''; display: inline-block; width: 7px; height: 7px; background: var(--brand); margin-right: 10px; }
+  .ix-btn { border-radius: 4px; }
+  .ix-hdr { top: 22px; left: 28px; right: 28px; color: #fff; }
+  .ix-hdr .ix-container { position: relative; max-width: 1240px; background: #151a222e; border: 1px solid #ffffff24; border-radius: 14px; height: 64px; padding-inline: 20px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: none; }
+  .ix-hdr .ix-container::after { content: none; }
+  .ix-hdr .ix-nav > a, .ix-hdr .ix-dd-b { border-radius: 10px; transition: background-color .25s; }
+  .ix-hdr .ix-nav > a:hover, .ix-hdr .ix-dd-b:hover, .ix-hdr .ix-dd.open .ix-dd-b { background-color: #ffffff14; }
+  .ix-hdr .ix-dd-m { background: #20242ded; color: #fff; border: 1px solid #ffffff30; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 14px; }
+  .ix-hdr .ix-dd-m a:hover, .ix-hdr .ix-dd-m a:focus-visible { background: #ffffff12; color: #fff; }
+  .ix-hdr .ix-login { border-radius: 8px; padding: 9px 15px; box-shadow: none; background: #ffffff12; border: 1px solid #ffffff55; font-weight: 500; }
+  .ix-hdr .ix-login:hover { background: #eb1832; }
+  @supports not (backdrop-filter: blur(1px)) { .ix-hdr .ix-container { background: #20242df2; } }
+  .ix-hdr .ix-logo { border-right: 0; padding-right: 10px; }
+  .ix-hdr .ix-logo svg { width: 29px; height: 29px; }
+  .ix-hdr .ix-logo b { font-size: .94rem; letter-spacing: .18em; }
+  .ix-hdr .ix-nav { font-weight: 500; }
+  .ix-hdr .ix-icon-btn { border-color: transparent; background: transparent; width: 34px; height: 34px; }
+  .ix-login { border-radius: 4px; background: var(--brand); color: #fff; }
+  .ix-nav > a, .ix-dd-b { font-size: .8rem; }
+  .ix-hero-frame { margin: 0; border-radius: 0; }
+  .ix-hero { min-height: 740px; }
+  .ix-hero::before { background: linear-gradient(90deg,#13161a 0%,#13161af2 25%,#13161a66 58%,#13161a08 85%),linear-gradient(0deg,#12141988,transparent 30%); }
+  .ix-hero-in { padding-top: 160px; padding-bottom: 100px; max-width: 1020px; }
+  .ix-hero-kicker { color: #fff; display: flex; align-items: center; gap: 12px; }
+  .ix-hero-kicker::before { content: ''; height: 2px; width: 38px; background: #ed243d; }
+  .ix-hero h1 { font-size: clamp(3.4rem,6.8vw,6.6rem); font-weight: 750; letter-spacing: -.06em; }
+  .ix-hero h1 em { font-style: normal; font-weight: 400; }
+  .ix-hero h1 .l:last-child { border-left: 5px solid #ed243d; padding-left: 22px; }
+  .ix-hero .sub { margin-top: 15px; color: #d2d3d6; }
+  .ix-modes { border-radius: 4px; background: #ffffff10; border-color: #ffffff30; }
+  .ix-mode { border-radius: 2px; }
+  .ix-mode[aria-selected="true"] { background: #ed243d; color: #fff; }
+  .ix-search { border-radius: 4px; padding: 8px; }
+  .ix-search .ix-btn { border-radius: 2px; }
+  .ix-hero-route { position: absolute; right: 0; bottom: 95px; width: 240px; background: #d0021b; color: #fff; padding: 24px 28px; z-index: 3; display: grid; gap: 20px; text-decoration: none; }
+  .ix-hero-route > span:first-child { font-size: .66rem; letter-spacing: .15em; }
+  .ix-hero-route strong { font-size: 1.2rem; font-weight: 500; line-height: 1.5; }
+  .ix-route-arrow { position: absolute; right: 24px; top: 20px; font-size: 1.6rem; }
+  .ix-intro-image img { border-radius: 0; height: 380px; }
+  .ix-intro-image { padding: 0 18px 18px 0; }
+  .ix-intro-image::after { content: ''; position: absolute; right: 0; bottom: 0; width: 45%; height: 55%; border-right: 2px solid var(--brand); border-bottom: 2px solid var(--brand); pointer-events: none; }
+  .ix-intro-image span { border-radius: 0; left: -20px; background: var(--ink); color: var(--bg); }
+  #listings { margin: 0; border-radius: 0; border-top: 1px solid var(--line); }
+  #listings .ix-head-row { text-align: left; }
+  #listings .ix-tools { border-top: 1px solid var(--line); padding-top: 24px; }
+  .ix-chip,.ix-sort select,.ix-property-search { border-radius: 4px; }
+  .ix-card { background: transparent; border-radius: 0; padding: 0; }
+  :root[data-theme="dark"] .ix-card { background: transparent; }
+  .ix-card-ph { aspect-ratio: 1.85; border-radius: 6px; }
+  .ix-card-info { padding: 22px 0 28px; display: grid; grid-template-columns: 1fr auto; column-gap: 18px; border-bottom: 1px solid var(--line); }
+  .ix-card-price { grid-column: 2; grid-row: 1 / 3; text-align: right; font-size: 1.5rem; color: var(--ink); }
+  .ix-card-price > span { display: block; margin-top: 4px; }
+  .ix-ttl { grid-column: 1; grid-row: 1; font-size: 1.15rem; }
+  .ix-card-info > .ix-addr { grid-column: 1; font-size: .82rem; }
+  .ix-spec { grid-column: 1 / -1; font-size: .82rem; }
+  .ix-acts { grid-column: 1 / -1; border-top: 0; padding-top: 6px; }
+  .ix-book { flex: 0 1 auto; padding: 10px 20px; border-radius: 4px; }
+  .ix-card:hover { box-shadow: none; }
+  .ix-svc { border-radius: 4px; border-bottom: 4px solid var(--brand); }
+  #about { background: #191b20; margin: 0; border-radius: 0; }
+  #about .ix-eyebrow { color: #fff; } #about .ix-h2 em { color: #b9bbc2; }
+  .ix-portrait { border-radius: 0; }
+  .ix-atlas { display: grid; grid-template-columns: .8fr 1.5fr; min-height: 550px; border-top: 1px solid var(--line); }
+  .ix-city-index { display: grid; align-content: stretch; padding-right: 40px; }
+  .ix-city-index button { display: grid; grid-template-columns: 32px 1fr 22px; align-items: center; gap: 18px; padding: 20px 14px; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; font-size: 1.15rem; transition: background .25s,color .25s; }
+  .ix-city-index button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-left: 4px solid var(--brand); }
+  .ix-city-index small { display: block; font-size: .62rem; opacity: .65; margin-top: 4px; letter-spacing: .04em; }
+  .ix-city-number { color: var(--brand); font-size: .64rem; font-weight: 700; }
+  .ix-city-index button[aria-pressed="true"] .ix-city-number { color: #ff6b7c; }
+  .ix-city-preview { position: relative; overflow: hidden; min-height: 500px; background: #17191d; color: #fff; }
+  .ix-city-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: ix-fadeIn .5s ease; }
+  .ix-city-preview::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg,#11151aed,transparent 85%); pointer-events: none; }
+  .ix-atlas-stamp { position: absolute; top: 24px; right: 24px; z-index: 1; font-size: .58rem; letter-spacing: .12em; background: #17191da6; padding: 10px 16px; border-top: 2px solid #ed243d; }
+  .ix-atlas-stamp b { display: block; font-size: 2rem; font-weight: 400; }
+  .ix-city-caption { position: absolute; z-index: 1; bottom: 36px; left: 36px; right: 30px; }
+  .ix-city-caption > span { font-size: .7rem; letter-spacing: .08em; }
+  .ix-city-caption h3 { font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 500; margin: 8px 0 24px; }
+  #reviews { margin: 0; border-radius: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .ix-foot { margin: 0; border-radius: 0; border-top: 5px solid var(--brand); }
+  @media(max-width:1150px) { .ix-hero-route { display: none; } }
+  @media(max-width:767px) {
+    .ix-hdr { top: 14px; left: 14px; right: 14px; } .ix-hdr .ix-container { height: 58px; padding-inline: 14px; border-radius: 12px; } .ix-hdr .ix-logo { border: 0; padding-right: 0; }
+    .ix-hero-frame { margin-top: 0; } .ix-hero { min-height: 760px; }
+    .ix-hero-in { padding: 125px 24px 90px; } .ix-hero h1 { font-size: clamp(2.8rem,10vw,4rem); }
+    .ix-hero h1 .l:last-child { padding-left: 12px; border-width: 3px; }
+    .ix-hero::before { background: linear-gradient(90deg,#13161ad9,#13161a65),linear-gradient(0deg,#13161a9c,transparent); }
+    .ix-intro-image span { left: 0; } .ix-card-info { column-gap: 10px; } .ix-ttl { font-size: .95rem; } .ix-card-price { font-size: 1.12rem; } .ix-card-info > .ix-addr { font-size: .69rem; }
+    .ix-atlas { grid-template-columns: 1fr; } .ix-city-index { padding: 0; grid-template-columns: 1fr 1fr; gap: 0 10px; margin-bottom: 20px; }
+    .ix-city-index button { font-size: .9rem; gap: 8px; grid-template-columns: 20px 1fr; padding: 14px 10px; } .ix-city-index button > span:last-child { display: none; }
+    .ix-city-preview { min-height: 400px; } .ix-city-caption { bottom: 24px; left: 24px; }
+  }
+}
