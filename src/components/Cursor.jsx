@@ -1,64 +1,95 @@
 import { useEffect, useRef } from 'react'
+import { prefersReducedMotion } from '../utils'
 
+const INTERACTIVE = 'a, button, [role="button"], summary, label'
+const NATIVE = 'input, select, textarea, option'
+
+/**
+ * Custom cursor: a small dot that follows the mouse exactly, and a ring that trails behind it.
+ *  - over links and buttons the ring grows
+ *  - over anything with data-cursor="Text" (listing cards, service tiles) it becomes a red circle with that text
+ *  - over form fields the normal cursor comes back
+ * Only runs with a mouse (not touch) and when the visitor has not asked for reduced motion.
+ */
 export default function Cursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
   const labelRef = useRef(null)
+
   useEffect(() => {
-    const media = matchMedia('(pointer: fine) and (hover: hover) and (prefers-reduced-motion: no-preference)')
+    const fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches
+    if (!fine || prefersReducedMotion()) return
+
     const root = document.documentElement
-    const dot = dotRef.current, ring = ringRef.current
-    let frame = 0, x = 0, y = 0, rx = 0, ry = 0, visible = false
-    const hide = () => {
-      visible = false
-      root.classList.remove('ix-cursor-on')
-      dot.classList.remove('show')
-      ring.classList.remove('show')
-      cancelAnimationFrame(frame)
-      frame = 0
+    const dot = dotRef.current
+    const ring = ringRef.current
+    const label = labelRef.current
+    root.classList.add('ix-cursor-on')
+
+    let mx = window.innerWidth / 2
+    let my = window.innerHeight / 2
+    let rx = mx
+    let ry = my
+    let raf
+
+    const setState = (state, text = '') => {
+      ring.dataset.state = state
+      dot.dataset.state = state
+      label.textContent = text
     }
-    const tick = () => {
-      rx += (x - rx) * .24
-      ry += (y - ry) * .24
-      ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)'
-      frame = Math.abs(x-rx) + Math.abs(y-ry) > .2 ? requestAnimationFrame(tick) : 0
+
+    const onMove = (e) => {
+      mx = e.clientX
+      my = e.clientY
+      ring.classList.add('show')
+      dot.classList.add('show')
     }
-    const over = e => {
-      if (!(e.target instanceof Element)) return
-      const native = e.target.closest('input,select,textarea,option,[contenteditable="true"]')
-      const target = e.target.closest('a,button,summary,[role="button"],[data-cursor]')
-      const label = !native && target?.dataset.cursor
-      const state = native ? 'native' : label ? 'view' : target ? 'link' : 'default'
-      dot.dataset.state = ring.dataset.state = state
-      labelRef.current.textContent = label || ''
+    const onOver = (e) => {
+      const t = e.target
+      if (!(t instanceof Element)) return
+      if (t.closest(NATIVE)) return setState('native')
+      const withText = t.closest('[data-cursor]')
+      const nearest = t.closest(`${INTERACTIVE}, [data-cursor]`)
+      if (nearest && nearest === withText) return setState('view', withText.dataset.cursor)
+      if (nearest) return setState('link')
+      setState('default')
     }
-    const move = e => {
-      if (!media.matches || e.pointerType !== 'mouse') return
-      x=e.clientX; y=e.clientY
-      if (!visible) { rx=x; ry=y; visible=true; root.classList.add('ix-cursor-on'); dot.classList.add('show'); ring.classList.add('show') }
-      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)'
-      over(e)
-      if (!frame) tick()
+    const onDown = () => ring.classList.add('down')
+    const onUp = () => ring.classList.remove('down')
+    const onLeave = () => { ring.classList.remove('show'); dot.classList.remove('show') }
+
+    const loop = () => {
+      rx += (mx - rx) * 0.16
+      ry += (my - ry) * 0.16
+      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`
+      raf = requestAnimationFrame(loop)
     }
-    const down = () => ring.classList.add('down')
-    const up = () => ring.classList.remove('down')
-    window.addEventListener('pointermove',move,{passive:true})
-    document.addEventListener('pointerover',over,{passive:true})
-    document.addEventListener('pointerdown',down)
-    document.addEventListener('pointerup',up)
-    root.addEventListener('pointerleave',hide)
-    window.addEventListener('blur',hide)
-    media.addEventListener('change',hide)
+    raf = requestAnimationFrame(loop)
+
+    window.addEventListener('mousemove', onMove, { passive: true })
+    document.addEventListener('mouseover', onOver, { passive: true })
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('mouseup', onUp)
+    document.documentElement.addEventListener('mouseleave', onLeave)
+
     return () => {
-      hide()
-      window.removeEventListener('pointermove',move)
-      document.removeEventListener('pointerover',over)
-      document.removeEventListener('pointerdown',down)
-      document.removeEventListener('pointerup',up)
-      root.removeEventListener('pointerleave',hide)
-      window.removeEventListener('blur',hide)
-      media.removeEventListener('change',hide)
+      cancelAnimationFrame(raf)
+      window.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseover', onOver)
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('mouseup', onUp)
+      document.documentElement.removeEventListener('mouseleave', onLeave)
+      root.classList.remove('ix-cursor-on')
     }
-  },[])
-  return <><div className="ix-cursor" ref={ringRef} aria-hidden="true"><div className="ix-ring"><span className="label" ref={labelRef}/></div></div><div className="ix-dot" ref={dotRef} aria-hidden="true"/></>
+  }, [])
+
+  return (
+    <>
+      <div className="ix-cursor" ref={ringRef} data-state="default" aria-hidden="true">
+        <div className="ix-ring"><span className="label" ref={labelRef} /></div>
+      </div>
+      <div className="ix-dot" ref={dotRef} data-state="default" aria-hidden="true" />
+    </>
+  )
 }

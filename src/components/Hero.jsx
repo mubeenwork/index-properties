@@ -11,16 +11,16 @@ const MODES = [
 
 /** Full-screen photo slider with the Buy / Rent / Sell search. */
 export default function Hero({ onSearch, onSell }) {
-  const [slide, setSlide] = useState(2)
+  const [slide, setSlide] = useState(0)
   const [mode, setMode] = useState('buy')
   const [city, setCity] = useState('')
   const [type, setType] = useState('all')
   const [address, setAddress] = useState('')
 
-  // Advance every 8.5s. The timer restarts whenever the slide changes (also after a dot click).
+  // Advance every 5.5s. The timer restarts whenever the slide changes (also after a dot click).
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const id = setTimeout(() => setSlide((s) => (s + 1) % HERO_SLIDES.length), 8500)
+    const id = setTimeout(() => setSlide((s) => (s + 1) % HERO_SLIDES.length), 5500)
     return () => clearTimeout(id)
   }, [slide])
 
@@ -35,15 +35,15 @@ export default function Hero({ onSearch, onSell }) {
       <div className="ix-slides">
         {HERO_SLIDES.map((s, i) => (
           <div className={`ix-slide ${i === slide ? 'on' : ''}`} key={s.src}>
-            <img src={s.src} alt={s.alt} fetchPriority={i === 2 ? 'high' : 'auto'} style={{ objectPosition: s.position }} />
+            <img src={s.src} alt={s.alt} style={{ objectPosition: s.position }} />
           </div>
         ))}
       </div>
 
       <div className="ix-hero-in">
-        <span className="ix-hero-kicker">THE NEXT MOVE IS YOURS.</span><h1>
-          <span className="l"><span>Find your</span></span>
-          <span className="l"><span><em>own address.</em></span></span>
+        <h1>
+          <span className="l"><span>Find your place</span></span>
+          <span className="l"><span>in the <em>GTA.</em></span></span>
         </h1>
         <p className="sub ix-hf" style={{ '--d': 0 }}>Buy, sell or rent across Brampton, Mississauga, Toronto and beyond.</p>
 
@@ -84,7 +84,7 @@ export default function Hero({ onSearch, onSell }) {
         </form>
       </div>
 
-      <a className="ix-hero-route" href="#areas"><span>01 — 06</span><strong>Six cities.<br />Your next address.</strong><span className="ix-route-arrow" aria-hidden="true">↗</span></a><div className="ix-hero-foot"><span>INDEX REALTY / GREATER TORONTO</span>
+      <div className="ix-hero-foot">
         <div className="ix-hdots">
           {HERO_SLIDES.map((s, i) => (
             <button key={s.src} type="button" aria-label={`Photo ${i + 1}`} aria-current={i === slide} onClick={() => setSlide(i)}><i /></button>

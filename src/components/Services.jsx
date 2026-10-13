@@ -9,8 +9,8 @@ export default function Services() {
     <section className="ix-sec alt" id="services">
       <div className="ix-container">
         <div className="ix-head">
-          <span className="ix-eyebrow">02 / With you at every step</span>
-          <h2 className="ix-h2">Your move. <em>Our expertise.</em></h2>
+          <span className="ix-eyebrow">What we do</span>
+          <h2 className="ix-h2">Here for every <em>move</em></h2>
         </div>
         <div className="row g-4">
           {SERVICES.map((s, i) => (

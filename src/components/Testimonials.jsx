@@ -1,14 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TESTIMONIALS } from '../data/site'
+import { prefersReducedMotion } from '../utils'
 
-/** Reader-controlled quotes keep the current review stable while reading. */
+/** Auto-rotating quote. The timer restarts whenever the slide changes (also after a dot click). */
 export default function Testimonials() {
   const [index, setIndex] = useState(0)
 
-return (
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    const id = setTimeout(() => setIndex((i) => (i + 1) % TESTIMONIALS.length), 5500)
+    return () => clearTimeout(id)
+  }, [index])
+
+  return (
     <section className="ix-sec" id="reviews">
       <div className="ix-container ix-quote">
-        <span className="ix-eyebrow">THE OTHER SIDE OF MOVING DAY</span><h2 className="ix-h2">Good moves. <em>Happy people.</em></h2><span className="mark" aria-hidden="true">&ldquo;</span>
+        <span className="mark" aria-hidden="true">&ldquo;</span>
         <div className="ix-qs">
           {TESTIMONIALS.map((t, i) => (
             <div className={`ix-q ${i === index ? 'on' : ''}`} key={t.text} aria-hidden={i !== index}>
@@ -17,11 +24,11 @@ return (
             </div>
           ))}
         </div>
-        <div className="ix-review-controls"><button className="ix-review-arrow" aria-label="Previous review" onClick={() => setIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}>←</button><div className="ix-dots">
+        <div className="ix-dots">
           {TESTIMONIALS.map((t, i) => (
             <button key={t.text} type="button" aria-label={`Review ${i + 1}`} aria-current={i === index} onClick={() => setIndex(i)} />
           ))}
-        </div><button className="ix-review-arrow" aria-label="Next review" onClick={() => setIndex(i => (i + 1) % TESTIMONIALS.length)}>→</button></div>
+        </div>
       </div>
     </section>
   )

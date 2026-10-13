@@ -41,13 +41,13 @@ export const MENU = [
   { label: 'Calculators', items: [
     { label: 'Mortgage Payment' }, { label: 'Land Transfer Tax' }, { label: 'Affordability' }, { label: 'Closing Costs' },
   ] },
-  { label: 'Sold Properties', to: 'sold' },
+  { label: 'Sold Properties' },
   { label: 'About', items: [
-    { label: 'About Us', to: 'about' }, { label: 'Our Team', to: 'team' },
-    { label: 'Join Index Realty', to: 'join' }, { label: 'Contact Us', to: 'contact' },
+    { label: 'About Us', to: 'about' }, { label: 'Our Team', to: 'about' },
+    { label: 'Join Index Realty', to: 'contact' }, { label: 'Contact Us', to: 'contact' },
   ] },
   { label: 'Visitors Tools', items: [
-    { label: 'Buyer Programs', to: 'buyer-programs' }, { label: 'Listing Alerts' }, { label: 'School Rankings' },
-    { label: 'Buyer Guide', to: 'reports' }, { label: 'Seller Guide', to: 'reports' }, { label: 'Free Reports', to: 'reports' },
+    { label: 'Buyer Programs' }, { label: 'Listing Alerts' }, { label: 'School Rankings' },
+    { label: 'Buyer Guide' }, { label: 'Seller Guide' }, { label: 'Useful Links' },
   ] },
 ]
