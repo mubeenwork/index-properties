@@ -4,7 +4,7 @@
      02 Featured listings: white, a row of cards (listings.css)
      03 Neighbourhoods: dark rounded panel with a bento grid (locations.css)
      04 What we do: soft grey rounded panel with big photo tiles
-     05 About: red rounded panel
+     05 About: light band
      06 Client stories: tinted band with one big card
      07 Contact: black rounded panel */
 
@@ -15,25 +15,8 @@
   .ix-svc::after { content: ""; position: absolute; right: 22px; top: 22px; z-index: 2; width: 46px; height: 46px; border-radius: 50%; background: rgba(255, 255, 255, .92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b0b0b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M8 7h9v9'/%3E%3C/svg%3E") center / 20px no-repeat; transition: transform .5s var(--ease), background-color .3s; }
   .ix-svc:hover::after { transform: rotate(45deg) scale(1.08); background-color: #fff; }
 
-  /* 05 About */
-  .ix-about { margin: 12px; padding-block: 110px; border-radius: 44px; color: #fff; overflow: hidden; position: relative; background: linear-gradient(135deg, #d0021b 0%, #96010f 100%); }
-  :root[data-theme="dark"] .ix-about { background: linear-gradient(135deg, #b5121b 0%, #6f0912 100%); }
-  .ix-about::before { content: ""; position: absolute; left: -120px; bottom: -160px; width: 480px; height: 480px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .18); box-shadow: 0 0 0 60px rgba(255, 255, 255, .04), 0 0 0 120px rgba(255, 255, 255, .03); pointer-events: none; }
-  .ix-about .ix-container { position: relative; }
-  .ix-about .ix-eyebrow { color: #fff; opacity: .8; }
-  .ix-about .ix-h2 { color: #fff; font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: 1.05; }
-  .ix-about .ix-h2 em { color: #0b0b0b; }
-  .ix-about .ix-lead { color: rgba(255, 255, 255, .86); max-width: 52ch; }
-  .ix-about .ix-portrait { border-radius: 32px; background: #1a1a1a; box-shadow: 0 40px 70px -34px rgba(0, 0, 0, .7); }
-  .ix-about .ix-portrait .panel { background: #0b0b0b; }
-  .ix-about .ix-portrait .cap { border-radius: 0 18px 18px 0; }
-  .ix-feats { display: flex; gap: 12px; flex-wrap: wrap; }
-  .ix-feats div { display: flex; align-items: center; gap: 10px; padding: 11px 18px 11px 14px; border-radius: 999px; background: rgba(255, 255, 255, .13); border: 1px solid rgba(255, 255, 255, .24); font-weight: 700; font-size: .9rem; transition: background .3s, transform .4s var(--ease); }
-  .ix-feats div:hover { background: rgba(255, 255, 255, .22); transform: translateY(-3px); }
-  .ix-feats svg { width: 22px; height: 22px; flex: none; }
-  .ix-about .ix-stats div { border-top-color: rgba(255, 255, 255, .45); }
-  .ix-about .ix-stats div > span { color: rgba(255, 255, 255, .75); }
-  @media (max-width: 760px) { .ix-services, .ix-about { margin: 8px; border-radius: 30px; padding-block: 76px; } }
+  /* 05 About: see about.css (light band, red only for small accents) */
+  @media (max-width: 760px) { .ix-services { margin: 8px; border-radius: 30px; padding-block: 76px; } }
 
   /* 06 Client stories */
   .ix-reviews { background: color-mix(in srgb, var(--brand) 7%, var(--bg)); }

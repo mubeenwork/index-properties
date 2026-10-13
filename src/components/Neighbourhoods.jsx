@@ -40,7 +40,7 @@ export default function Neighbourhoods({ onPick }) {
       <div className="ix-container">
         <div className="ix-loc-head">
           <div className="ix-loc-title">
-            <span className="ix-eyebrow">03 / Neighbourhoods</span>
+            <span className="ix-eyebrow">05 / Neighbourhoods</span>
             <h2 className="ix-h2">Find your <em>corner</em><br />of the GTA</h2>
           </div>
           <div className="ix-loc-side">

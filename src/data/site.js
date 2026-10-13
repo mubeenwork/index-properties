@@ -46,8 +46,8 @@ export const MENU = [
     { label: 'About Us', to: 'about' }, { label: 'Our Team', to: 'team' },
     { label: 'Join Index Realty', to: 'contact' }, { label: 'Contact Us', to: 'contact' },
   ] },
-  { label: 'Visitors Tools', items: [
+  { label: 'Visitors Tools', match: ['blog', 'faq'], items: [
     { label: 'Buyer Programs' }, { label: 'Listing Alerts' }, { label: 'School Rankings' },
-    { label: 'Buyer Guide' }, { label: 'Seller Guide' }, { label: 'Useful Links' },
+    { label: 'Buyer Guide', to: 'blog' }, { label: 'Seller Guide', to: 'blog' }, { label: 'FAQ', to: 'faq' }, { label: 'Useful Links' },
   ] },
 ]

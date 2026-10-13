@@ -89,7 +89,7 @@ export default function Listings({ filters, onFilters, onContact }) {
       <div className="ix-container">
         <div className="ix-sh-top">
           <div className="ix-sh-title">
-            <span className="ix-eyebrow">02 / Featured listings</span>
+            <span className="ix-eyebrow">03 / Featured listings</span>
             <h2 className="ix-h2">Property <em>Showcase</em></h2>
             <i className="ix-underline" />
           </div>

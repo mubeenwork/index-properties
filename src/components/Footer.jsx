@@ -6,6 +6,8 @@ const LINKS = [
   { label: 'Neighbourhoods', to: 'areas' },
   { label: 'Services', to: 'services' },
   { label: 'About', to: 'about' },
+  { label: 'Blog', to: 'blog' },
+  { label: 'FAQ', to: 'faq' },
   { label: 'Contact', to: 'contact' },
 ]
 

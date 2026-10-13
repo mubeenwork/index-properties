@@ -41,7 +41,7 @@ export default function Team() {
       <div className="ix-container">
         <div className="ix-head-row">
           <div>
-            <span className="ix-eyebrow">06 / Our team</span>
+            <span className="ix-eyebrow">08 / Our team</span>
             <h2 className="ix-h2">Meet the people<br />behind <em>Index</em></h2>
           </div>
           <button className="ix-pillbtn" type="button" onClick={() => scrollToId('contact')}>Talk to an agent <ArrowIcon /></button>

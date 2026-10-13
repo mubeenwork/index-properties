@@ -4,7 +4,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import { MENU } from '../data/site'
 import { ArrowIcon, ChevronIcon, LogoMark, MenuIcon, MoonIcon, SunIcon } from './icons'
 
-const SECTIONS = ['listings', 'areas', 'about', 'team', 'reviews', 'contact']
+const SECTIONS = ['listings', 'areas', 'about', 'team', 'reviews', 'blog', 'faq', 'contact']
 
 /**
  * Floating glass header (a pill that hovers above the page) with the same tabs as indexrealtybrokerage.com.

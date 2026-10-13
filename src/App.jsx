@@ -9,6 +9,10 @@ import Listings from './components/Listings'
 import Services from './components/Services'
 import About from './components/About'
 import Team from './components/Team'
+import Blog from './components/Blog'
+import Faq from './components/Faq'
+import BuySell from './components/BuySell'
+import FeaturedOffer from './components/FeaturedOffer'
 import Neighbourhoods from './components/Neighbourhoods'
 import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
@@ -53,15 +57,19 @@ export default function App() {
         {/* Pinned hero: scroll through it and the INDEX wordmark carries you into the page */}
         <HeroScroll onSearch={showListings} onSell={() => scrollToId('contact')} />
         <Statement />
+        <SectionTransition><BuySell /></SectionTransition>
         {/* Each section eases in as a whole when you reach it (scroll or menu click) */}
         <SectionTransition>
           <Listings filters={filters} onFilters={setFilters} onContact={() => scrollToId('contact')} />
         </SectionTransition>
+        <SectionTransition><FeaturedOffer /></SectionTransition>
         <SectionTransition><Neighbourhoods onPick={(city) => showListings({ city })} /></SectionTransition>
         <SectionTransition><Services /></SectionTransition>
         <SectionTransition><About /></SectionTransition>
         <SectionTransition><Team /></SectionTransition>
         <SectionTransition><Testimonials /></SectionTransition>
+        <SectionTransition><Blog /></SectionTransition>
+        <SectionTransition><Faq /></SectionTransition>
         <SectionTransition><Contact /></SectionTransition>
       </main>
       <Footer onReplay={replayIntro} />

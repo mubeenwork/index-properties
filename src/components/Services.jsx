@@ -9,7 +9,7 @@ export default function Services() {
     <section className="ix-sec ix-services" id="services">
       <div className="ix-container">
         <div className="ix-head">
-          <span className="ix-eyebrow">04 / What we do</span>
+          <span className="ix-eyebrow">06 / What we do</span>
           <h2 className="ix-h2">Here for every <em>move</em></h2>
         </div>
         <div className="row g-4">

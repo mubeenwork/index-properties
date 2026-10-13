@@ -16,7 +16,7 @@ export default function Testimonials() {
     <section className="ix-sec ix-reviews" id="reviews">
       <div className="ix-container">
         <div className="ix-quote">
-          <span className="ix-eyebrow">07 / Client stories</span>
+          <span className="ix-eyebrow">09 / Client stories</span>
           <span className="ix-qmark" aria-hidden="true">&ldquo;</span>
           <div className="ix-qs">
             {TESTIMONIALS.map((t, i) => (
