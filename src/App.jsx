@@ -62,9 +62,9 @@ export default function App() {
         <SectionTransition>
           <Listings filters={filters} onFilters={setFilters} onContact={() => scrollToId('contact')} />
         </SectionTransition>
-        <SectionTransition><FeaturedOffer /></SectionTransition>
         <SectionTransition><Neighbourhoods onPick={(city) => showListings({ city })} /></SectionTransition>
         <SectionTransition><Services /></SectionTransition>
+        <SectionTransition><FeaturedOffer /></SectionTransition>
         <SectionTransition><About /></SectionTransition>
         <SectionTransition><Team /></SectionTransition>
         <SectionTransition><Testimonials /></SectionTransition>

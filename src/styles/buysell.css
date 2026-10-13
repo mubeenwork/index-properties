@@ -1,66 +1,70 @@
 @layer components {
-  /* ---------- Buy or sell: a toggle on a tall photo, the words on the right change with it ---------- */
-  .ix-bs { background: var(--bg2); padding-block: 90px; }
-  @media (max-width: 760px) { .ix-bs { padding-block: 64px; } }
-  .ix-bs-grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: 56px 84px; align-items: center; }
+  /* ---------- Buy or sell: two big doors side by side. The open one is wide and shows everything. ---------- */
+  .ix-dr { background: var(--bg2); padding-block: 64px 72px; }
+  @media (max-width: 760px) { .ix-dr { padding-block: 60px 64px; } }
+  .ix-dr-head { display: grid; justify-items: center; gap: 14px; text-align: center; margin-bottom: 30px; }
+  .ix-dr .ix-h2 { font-size: clamp(2.1rem, 4.2vw, 3.3rem); line-height: 1.05; }
 
-  .ix-bs-media { position: relative; aspect-ratio: 5 / 5.6; border-radius: 36px; overflow: hidden; background: #1a1a1c; box-shadow: 0 44px 70px -42px rgba(0, 0, 0, .6); isolation: isolate; }
-  .ix-bs-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08); transition: opacity .9s var(--ease-io), transform 1.4s var(--ease); }
-  .ix-bs-img.on { opacity: 1; transform: scale(1); }
-  .ix-bs-media::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, 0) 28%, rgba(0, 0, 0, 0) 62%, rgba(0, 0, 0, .55) 100%); pointer-events: none; }
-  /* a small red corner mark */
-  .ix-bs-corner { position: absolute; left: 22px; top: 22px; z-index: 2; width: 30px; height: 30px; border-left: 3px solid var(--brand); border-top: 3px solid var(--brand); border-top-left-radius: 8px; pointer-events: none; }
+  .ix-dr-grid { position: relative; display: flex; gap: 16px; height: clamp(460px, 34vw, 480px); }
+  .ix-door { position: relative; flex: 1 1 0; min-width: 0; border-radius: 36px; overflow: hidden; color: #fff; background: #17171a; isolation: isolate; cursor: pointer; transition: flex .85s var(--ease); }
+  .ix-door.on { flex: 1.55 1 0; cursor: default; }
+  .ix-door > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); filter: brightness(.55) saturate(.85); transition: transform 1.3s var(--ease), filter .8s var(--ease); }
+  .ix-door.on > img { transform: scale(1); filter: none; }
+  .ix-door:not(.on):hover > img { filter: brightness(.7) saturate(.95); }
+  .ix-door::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(0, 0, 0, .86) 0%, rgba(0, 0, 0, .3) 55%, rgba(0, 0, 0, .35) 100%); transition: opacity .6s; }
+  /* the open door gets a darker wash so the words stay easy to read on a bright photo */
+  .ix-door.on::before { background: linear-gradient(0deg, rgba(0, 0, 0, .92) 0%, rgba(0, 0, 0, .78) 50%, rgba(0, 0, 0, .5) 100%); }
+  .ix-door-body h3, .ix-door-line, .ix-door-more li, .ix-door-steps li { text-shadow: 0 1px 14px rgba(0, 0, 0, .55); }
+  .ix-door-corner { position: absolute; right: 22px; bottom: 22px; z-index: 2; width: 30px; height: 30px; border-right: 3px solid var(--brand); border-bottom: 3px solid var(--brand); border-bottom-right-radius: 8px; opacity: 0; transition: opacity .5s; pointer-events: none; }
+  .ix-door.on .ix-door-corner { opacity: 1; }
 
-  /* The Buy / Sell toggle */
-  .ix-bs-toggle { position: absolute; left: 50%; top: 22px; z-index: 3; translate: -50% 0; display: grid; grid-template-columns: 1fr 1fr; padding: 5px; border-radius: 999px; background: rgba(12, 12, 12, .42); border: 1px solid rgba(255, 255, 255, .26); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-  .ix-bs-slider { position: absolute; left: 5px; top: 5px; bottom: 5px; width: calc(50% - 5px); border-radius: 999px; background: var(--brand); box-shadow: 0 10px 22px -10px var(--brand); transition: transform .55s var(--ease); }
-  .ix-bs-toggle.sell .ix-bs-slider { transform: translateX(100%); }
-  .ix-bs-toggle button { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 104px; height: 44px; padding: 0 22px; border: 0; background: none; color: rgba(255, 255, 255, .86); font-weight: 800; font-size: .9rem; cursor: pointer; transition: color .3s; }
-  .ix-bs-toggle button svg { width: 17px; height: 17px; }
-  .ix-bs-toggle button[aria-selected="true"] { color: #fff; }
-  .ix-bs-toggle button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 999px; }
+  /* top: the Buy / Sell label */
+  .ix-door-top { position: absolute; left: 24px; top: 22px; right: 24px; z-index: 3; display: flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; text-align: left; }
+  .ix-door-ico { width: 50px; height: 50px; border-radius: 50%; flex: none; display: grid; place-items: center; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .34); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: background .4s, border-color .4s; }
+  .ix-door-ico svg { width: 22px; height: 22px; }
+  .ix-door.on .ix-door-ico { background: var(--brand); border-color: var(--brand); }
+  .ix-door-label { font-weight: 800; font-size: 1.2rem; letter-spacing: -.02em; }
+  .ix-door-open { margin-left: auto; padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .3); font-weight: 800; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .ix-door-top:focus-visible { outline: 3px solid #fff; outline-offset: 4px; border-radius: 999px; }
 
-  .ix-bs-chip { position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 3; width: fit-content; max-width: calc(100% - 44px); display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 999px; background: rgba(255, 255, 255, .95); color: #0b0b0b; font-weight: 800; font-size: .84rem; animation: ix-bsIn .6s var(--ease) both; }
-  .ix-bs-chip i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 25%, transparent); }
+  /* bottom: the title and, when open, everything else */
+  .ix-door-body { position: absolute; left: 30px; right: 30px; bottom: 28px; z-index: 3; display: grid; gap: 6px; }
+  .ix-door-body h3 { font-size: clamp(1.8rem, 3vw, 2.7rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; }
+  .ix-door-line { color: rgba(255, 255, 255, .86); font-size: 1.02rem; }
+  .ix-door-more { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .75s var(--ease), opacity .5s var(--ease); }
+  .ix-door-more > div { overflow: hidden; display: grid; gap: 16px; }
+  .ix-door.on .ix-door-more { grid-template-rows: 1fr; opacity: 1; transition-delay: .2s; }
+  .ix-door-more ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; }
+  .ix-door-more ul li { position: relative; padding-left: 26px; font-weight: 600; font-size: .96rem; }
+  .ix-door-more ul li::before { content: ""; position: absolute; left: 0; top: .22em; width: 17px; height: 17px; border-radius: 50%; background: var(--brand) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 11px no-repeat; }
+  .ix-door-steps { list-style: none; margin: 0; padding: 14px 0 0; border-top: 1px solid rgba(255, 255, 255, .26); display: flex; gap: 8px 22px; flex-wrap: wrap; }
+  .ix-door-steps li { display: inline-flex; align-items: baseline; gap: 8px; font-weight: 700; font-size: .92rem; }
+  .ix-door-steps b { color: #ff5566; font-size: 1.05rem; font-variant-numeric: lining-nums; }
+  .ix-door-cta { display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap; }
+  .ix-door .ix-door-cta .ix-btn { border-radius: 999px; }
+  .ix-door-link { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; padding: 0; color: #fff; font-weight: 700; cursor: pointer; transition: gap .3s var(--ease), color .25s; }
+  .ix-door-link:hover { gap: 12px; color: #ff8a96; }
 
-  /* the thin line along the bottom of the photo: it fills up until the next automatic switch */
-  .ix-bs-prog { position: absolute; left: 0; bottom: 0; z-index: 4; width: 100%; height: 4px; background: var(--brand); transform-origin: 0 50%; animation: ix-prog 3s linear both; pointer-events: none; }
-  .ix-bs-prog.hold { animation-play-state: paused; }
+  /* the thin line along the bottom of the open door: it fills up until the sides swap */
+  .ix-door-prog { position: absolute; left: 0; bottom: 0; z-index: 4; width: 100%; height: 4px; background: var(--brand); transform-origin: 0 50%; animation: ix-prog 3s linear both; pointer-events: none; }
+  .ix-door-prog.hold { animation-play-state: paused; }
 
-  /* The words that change */
-  .ix-bs-swap { display: grid; gap: 20px; animation: ix-bsIn .65s var(--ease) both; }
-  @keyframes ix-bsIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-  .ix-bs-kicker { display: inline-flex; align-items: center; gap: 14px; font-weight: 800; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
-  .ix-bs-kicker::before { content: ""; width: 38px; height: 2px; background: var(--brand); }
-  .ix-bs .ix-h2 { font-size: clamp(2.1rem, 4.2vw, 3.4rem); line-height: 1.07; }
-  .ix-bs-sub { color: var(--muted); font-weight: 600; font-size: 1.05rem; margin-top: -4px; }
-  .ix-bs-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  .ix-bs-points li { position: relative; padding-left: 28px; font-weight: 600; }
-  .ix-bs-points li::before { content: ""; position: absolute; left: 3px; top: .55em; width: 9px; height: 9px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 5px color-mix(in srgb, var(--brand) 16%, transparent); }
-  .ix-bs-cta { display: flex; align-items: center; gap: 14px 28px; flex-wrap: wrap; margin-top: 4px; }
-  .ix-bs .ix-bs-cta .ix-btn { border-radius: 999px; }
-  .ix-bs-link { display: inline-flex; align-items: center; gap: 8px; border: 0; background: none; padding: 0; color: var(--ink); font-weight: 700; cursor: pointer; transition: color .25s, gap .3s var(--ease); }
-  .ix-bs-link:hover { color: var(--brand); gap: 12px; }
+  /* the round "or" between the doors */
+  .ix-dr-or { position: absolute; left: 50%; top: 50%; z-index: 6; translate: -50% -50%; width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); color: var(--ink); border: 6px solid var(--bg2); font-weight: 800; font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; box-shadow: 0 16px 34px -14px rgba(0, 0, 0, .5); pointer-events: none; transition: left .85s var(--ease); }
+  .ix-dr-grid:has(.ix-door:first-child.on) .ix-dr-or { left: calc(60.78% - 8px); }
+  .ix-dr-grid:has(.ix-door:last-of-type.on) .ix-dr-or { left: calc(39.22% + 8px); }
 
-  /* The three steps */
-  .ix-bs-steps { list-style: none; margin: 8px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-  .ix-bs-steps li { display: grid; gap: 2px; }
-  .ix-bs-steps b { color: var(--brand); font-weight: 800; font-size: 1.5rem; letter-spacing: -.04em; line-height: 1; font-variant-numeric: lining-nums; }
-  .ix-bs-steps strong { font-size: 1.02rem; font-weight: 800; letter-spacing: -.02em; margin-top: 6px; }
-  .ix-bs-steps span { color: var(--muted); font-size: .86rem; line-height: 1.4; }
-
-  @media (max-width: 991px) {
-    .ix-bs-grid { grid-template-columns: 1fr; gap: 36px; }
-    .ix-bs-media { max-width: 520px; aspect-ratio: 5 / 4.6; }
+  /* Phones and tablets: the doors stack, the open one is taller */
+  @media (max-width: 860px) {
+    .ix-dr-grid { flex-direction: column; height: auto; gap: 12px; }
+    .ix-door, .ix-door.on { flex: none; transition: height .8s var(--ease); }
+    .ix-door { height: 150px; border-radius: 28px; }
+    .ix-door:not(.on) .ix-door-line { display: none; }
+    .ix-door.on { height: 540px; }
+    .ix-door-body { left: 22px; right: 22px; bottom: 20px; }
+    .ix-door-top { left: 18px; right: 18px; top: 16px; }
+    .ix-dr-or { display: none; }
   }
-  @media (max-width: 560px) {
-    .ix-bs-media { border-radius: 28px; aspect-ratio: 5 / 5; }
-    .ix-bs-toggle button { min-width: 92px; padding: 0 16px; }
-    .ix-bs-steps { gap: 12px; }
-    .ix-bs-steps span { font-size: .8rem; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ix-bs-img, .ix-bs-slider { transition: none; }
-    .ix-bs-swap, .ix-bs-chip { animation: none; }
-  }
+  @media (max-width: 520px) { .ix-door.on { height: 580px; } .ix-door-open { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .ix-door, .ix-door > img, .ix-door-more, .ix-dr-or { transition: none; } }
 }

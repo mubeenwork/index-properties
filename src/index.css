@@ -23,6 +23,7 @@
 @import "./styles/blog.css";
 @import "./styles/buysell.css";
 @import "./styles/offer.css";
+@import "./styles/spacing.css";
 @import "./styles/team.css";
 
 /* Tailwind theme: the colours come from the CSS variables in styles/base.css,

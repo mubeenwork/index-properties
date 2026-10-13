@@ -2,59 +2,54 @@ import { useEffect, useRef, useState } from 'react'
 import buyPhoto from '../assets/images/about.jpg'
 import sellPhoto from '../assets/images/home8.jpg'
 import { prefersReducedMotion, scrollToId } from '../utils'
-
-// How long each side (Buy or Sell) stays before it switches by itself, in milliseconds.
-const AUTO_MS = 3000
 import { ArrowIcon, TagIcon } from './icons'
+
+// How long each side (Buy or Sell) stays open before it switches by itself, in milliseconds.
+const AUTO_MS = 3000
 
 const HomeIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9z" /></svg>
 )
 
-// Everything that changes when you switch between Buy and Sell.
-const MODES = {
-  buy: {
-    label: 'Buy', icon: <HomeIcon />, photo: buyPhoto, alt: 'A small house model and keys on a table',
-    kicker: 'Your next move starts here',
-    title: <>Looking for a home?<br />We'll make it <em>simple.</em></>,
-    sub: 'Find homes in your budget',
+// The two sides. Edit the words here.
+const SIDES = [
+  {
+    id: 'buy', label: 'Buy', icon: <HomeIcon />, photo: buyPhoto, alt: 'A small house model and keys on a table',
+    title: 'I want to buy',
+    line: 'Find the right home at the right price.',
     points: ['Homes matched to your budget and lifestyle', 'Expert negotiation on your behalf', 'Support from the first search to closing day'],
+    steps: ['Search', 'Offer', 'Keys'],
     cta: { label: 'Browse listings', to: 'listings' },
-    chip: 'Free buyer consultation',
-    steps: [['Search', 'Tell us your budget'], ['Offer', 'We negotiate for you'], ['Keys', 'Close with confidence']],
   },
-  sell: {
-    label: 'Sell', icon: <TagIcon />, photo: sellPhoto, alt: 'A modern villa with a swimming pool',
-    kicker: 'Thinking of selling?',
-    title: <>Ready to sell?<br />Let's get you the <em>best price.</em></>,
-    sub: 'Get a free home valuation',
+  {
+    id: 'sell', label: 'Sell', icon: <TagIcon />, photo: sellPhoto, alt: 'A modern villa with a swimming pool',
+    title: 'I want to sell',
+    line: 'Get the best price for your home.',
     points: ['A free valuation from recent nearby sales', 'Staging advice and professional photos', 'Your home marketed where buyers look'],
+    steps: ['Evaluate', 'List', 'Sell'],
     cta: { label: 'Get my valuation', to: 'contact' },
-    chip: 'Free valuation, reply within one business day',
-    steps: [['Evaluate', 'A free valuation'], ['List', 'Photos and marketing'], ['Sell', 'The best offer, closed']],
   },
-}
+]
 
 /**
- * Buy or sell: a toggle on top of a tall photo. Switching it swaps the photo and all the words on the right
- * (the headline, three points, the button and the three steps). The text is in MODES above.
+ * Buy or sell, as two big doors side by side. The open one is wide and shows everything; the other one is narrower
+ * and shows only its title. They swap by themselves every few seconds. Point at one to open it, click to keep it.
  */
 export default function BuySell() {
-  const [mode, setMode] = useState('buy')
+  const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false) // the mouse or the keyboard is on the section
-  const [picked, setPicked] = useState(false) // the visitor chose a side themselves: stop switching for them
+  const [picked, setPicked] = useState(false) // the visitor clicked a side: stop switching for them
   const [visible, setVisible] = useState(false) // the section is on screen
   const ref = useRef(null)
-  const m = MODES[mode]
-  const keys = Object.keys(MODES)
+  const hoverTimer = useRef(null)
   const auto = !picked && !prefersReducedMotion()
 
-  // Switch sides on its own, only while the section is on screen and nobody is pointing at it.
+  // Swap sides on their own, only while the section is on screen and nobody is pointing at it.
   useEffect(() => {
     if (!auto || paused || !visible) return
-    const id = setTimeout(() => setMode((cur) => (cur === 'buy' ? 'sell' : 'buy')), AUTO_MS)
+    const id = setTimeout(() => setActive((a) => (a + 1) % SIDES.length), AUTO_MS)
     return () => clearTimeout(id)
-  }, [mode, auto, paused, visible])
+  }, [active, auto, paused, visible])
 
   useEffect(() => {
     const el = ref.current
@@ -63,65 +58,70 @@ export default function BuySell() {
     io.observe(el)
     return () => io.disconnect()
   }, [])
+  useEffect(() => () => clearTimeout(hoverTimer.current), [])
 
-  const choose = (k) => { setPicked(true); setMode(k) }
-
-  const onKey = (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-      e.preventDefault()
-      choose(mode === 'buy' ? 'sell' : 'buy')
-    }
-  }
+  // Pointing at a door opens it after a short pause, so the doors do not jump while the mouse only passes over.
+  const hover = (i) => { clearTimeout(hoverTimer.current); hoverTimer.current = setTimeout(() => setActive(i), 120) }
+  const choose = (i) => { clearTimeout(hoverTimer.current); setPicked(true); setActive(i) }
 
   return (
-    <section className="ix-sec ix-bs" id="move" ref={ref}>
+    <section className="ix-sec ix-dr" id="move" ref={ref}>
       <div className="ix-container">
+        <div className="ix-dr-head">
+          <span className="ix-eyebrow">02 / Your next move</span>
+          <h2 className="ix-h2">Buying or selling? <em>Start here.</em></h2>
+        </div>
+
         <div
-          className="ix-bs-grid"
+          className="ix-dr-grid"
           onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          onMouseLeave={() => { setPaused(false); clearTimeout(hoverTimer.current) }}
           onFocus={() => setPaused(true)}
           onBlur={() => setPaused(false)}
         >
-          <div className="ix-bs-media">
-            {keys.map((k) => (
-              <img key={k} className={`ix-bs-img ${mode === k ? 'on' : ''}`} src={MODES[k].photo} alt={mode === k ? MODES[k].alt : ''} loading="lazy" />
-            ))}
-            <span className="ix-bs-corner" aria-hidden="true" />
+          {SIDES.map((s, i) => {
+            const on = active === i
+            return (
+              <article
+                key={s.id}
+                className={`ix-door ${on ? 'on' : ''}`}
+                onMouseEnter={() => hover(i)}
+                onClick={() => !on && choose(i)}
+              >
+                <img src={s.photo} alt={on ? s.alt : ''} loading="lazy" />
+                <span className="ix-door-corner" aria-hidden="true" />
 
-            <div className={`ix-bs-toggle ${mode}`} role="tablist" aria-label="Buy or sell" onKeyDown={onKey}>
-              <span className="ix-bs-slider" aria-hidden="true" />
-              {keys.map((k) => (
-                <button key={k} type="button" role="tab" id={`bs-tab-${k}`} aria-selected={mode === k} aria-controls="bs-panel" tabIndex={mode === k ? 0 : -1} onClick={() => choose(k)}>
-                  {MODES[k].icon}{MODES[k].label}
+                <button className="ix-door-top" type="button" aria-expanded={on} aria-controls={`door-${s.id}`} onClick={() => choose(i)}>
+                  <span className="ix-door-ico">{s.icon}</span>
+                  <span className="ix-door-label">{s.label}</span>
+                  <span className="ix-door-open" aria-hidden="true">{on ? 'Open' : 'See more'}</span>
                 </button>
-              ))}
-            </div>
 
-            <span className="ix-bs-chip" key={`chip-${mode}`}><i />{m.chip}</span>
-            {/* a thin line that fills up until the next switch */}
-            {auto && <i className={`ix-bs-prog ${paused || !visible ? 'hold' : ''}`} key={`prog-${mode}-${paused || !visible}`} style={{ animationDuration: `${AUTO_MS}ms` }} aria-hidden="true" />}
-          </div>
+                <div className="ix-door-body" id={`door-${s.id}`}>
+                  <h3>{s.title}</h3>
+                  <p className="ix-door-line">{s.line}</p>
+                  <div className="ix-door-more" aria-hidden={!on}>
+                    <div>
+                      <ul>
+                        {s.points.map((p) => <li key={p}>{p}</li>)}
+                      </ul>
+                      <ol className="ix-door-steps">
+                        {s.steps.map((t, n) => <li key={t}><b>0{n + 1}</b>{t}</li>)}
+                      </ol>
+                      <div className="ix-door-cta">
+                        <button className="ix-btn" type="button" tabIndex={on ? 0 : -1} onClick={() => scrollToId(s.cta.to)}>{s.cta.label} <ArrowIcon /></button>
+                        <button className="ix-door-link" type="button" tabIndex={on ? 0 : -1} onClick={() => scrollToId('contact')}>Talk to an agent <span aria-hidden="true">›</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-          <div className="ix-bs-copy" id="bs-panel" role="tabpanel" aria-labelledby={`bs-tab-${mode}`}>
-            <div className="ix-bs-swap" key={mode}>
-              <span className="ix-bs-kicker">02 / {m.kicker}</span>
-              <h2 className="ix-h2">{m.title}</h2>
-              <p className="ix-bs-sub">{m.sub}</p>
-              <ul className="ix-bs-points">
-                {m.points.map((p) => <li key={p}>{p}</li>)}
-              </ul>
-              <div className="ix-bs-cta">
-                <button className="ix-btn" type="button" onClick={() => scrollToId(m.cta.to)}>{m.cta.label} <ArrowIcon /></button>
-                <button className="ix-bs-link" type="button" onClick={() => scrollToId('contact')}>Talk to an agent <span aria-hidden="true">›</span></button>
-              </div>
-              <ol className="ix-bs-steps">
-                {m.steps.map(([t, d], i) => (
-                  <li key={t}><b>0{i + 1}</b><strong>{t}</strong><span>{d}</span></li>
-                ))}
-              </ol>
-            </div>
-          </div>
+                {/* a thin line that fills up until the sides swap */}
+                {on && auto && <i className={`ix-door-prog ${paused || !visible ? 'hold' : ''}`} key={`prog-${active}-${paused || !visible}`} style={{ animationDuration: `${AUTO_MS}ms` }} aria-hidden="true" />}
+              </article>
+            )
+          })}
+          <span className="ix-dr-or" aria-hidden="true">or</span>
         </div>
       </div>
     </section>

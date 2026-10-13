@@ -45,11 +45,11 @@ src/
 | - | Header | floating glass pill, red highlight slides between tabs, dot shows the current section, dark glass over the hero and light glass elsewhere | `Header.jsx`, `styles/header.css` |
 | - | Hero + INDEX scene | full-screen photo slider that stays pinned for about two screens. Scrolling lifts the headline away, darkens the screen, shows a giant INDEX with the Toronto skyline inside the letters, then zooms it while Why Index rises over it. Retime it in `HeroScroll.jsx` (the seg ranges) and `height: 220vh` in `styles/scenes.css`; with reduce motion it is a plain hero | `Hero.jsx`, `HeroScroll.jsx`, `styles/hero.css` |
 | 01 | Why Index | short statement that fills in word by word, then a bento grid of four reasons (a big photo tile, two photo tiles and a red number tile). Small tiles open their text on hover | `Statement.jsx`, `ScrollWords.jsx`, `styles/scenes.css` |
-| 02 | Buy or sell | a Buy / Sell toggle on a tall photo. Switching it swaps the photo, the headline, three points, the button and the three steps. It switches by itself every 3 seconds (`AUTO_MS`), pauses while the mouse is on it, and stops for good once the visitor clicks a side. Text is in `MODES` at the top of the file | `BuySell.jsx`, `styles/buysell.css` |
+| 02 | Buy or sell | two big doors side by side, Buy and Sell. The open one is wide and shows its points, three steps and a button; the other is narrower and shows only its title. They swap by themselves every 3 seconds (`AUTO_MS`), open when you point at one, pause while the mouse is on them, and stop for good once a side is clicked. Text is in `SIDES` at the top of the file | `BuySell.jsx`, `styles/buysell.css` |
 | 03 | Featured listings | **Property Showcase**: Sale / Rent tabs, search box, swipeable row of cards. Each card shows its number (01 / 08), the price (old price crossed out) and its offer | `Listings.jsx`, `ListingCard.jsx`, `styles/listings.css` |
-| 04 | Featured offer | a wide rounded photo banner with one strong message, a phone number, a button and three offer chips; the photo drifts slowly as you scroll. Offers are in `OFFERS` | `FeaturedOffer.jsx`, `styles/offer.css` |
-| 05 | Neighbourhoods | dark rounded panel with six expanding panels: hover, focus or tap a city and it opens wide with its photo, number of homes and an Explore button; the others become thin strips with a vertical name (stacked on phones) | `Neighbourhoods.jsx`, `styles/locations.css` |
-| 06 | What we do | soft grey rounded panel with three big photo tiles | `Services.jsx`, `styles/identity.css` |
+| 04 | Neighbourhoods | dark rounded panel with six expanding panels: hover, focus or tap a city and it opens wide with its photo, number of homes and an Explore button; the others become thin strips with a vertical name (stacked on phones) | `Neighbourhoods.jsx`, `styles/locations.css` |
+| 05 | What we do | soft grey rounded panel with three big photo tiles | `Services.jsx`, `styles/identity.css` |
+| 06 | Featured offer | a rounded dark card: the offer, three included items, a button and a phone number on the left, a photo on the right. Offers are in `OFFERS` | `FeaturedOffer.jsx`, `styles/offer.css` |
 | 07 | About | the usual real estate layout on one screen: a big portrait of the Broker of Record (taken from `src/data/team.js`) with a name plate and a Free consultation card, a short bio, three numbers and a button | `About.jsx`, `styles/about.css` |
 | 08 | Our team | a marquee: a row of agent cards slides sideways by itself and pauses on hover; social icons slide in on hover. Dummy agents and stock portraits in `src/data/team.js` | `Team.jsx`, `styles/team.css` |
 | 09 | Client stories | tinted band with one big rounded quote card | `Testimonials.jsx`, `styles/identity.css` |
@@ -58,6 +58,10 @@ src/
 | 12 | Contact | black rounded panel with a red glow | `Contact.jsx`, `styles/identity.css` |
 
 To change what a listing shows, edit `src/data/listings.js` (`mode`: sale or rent, `offer`, `was` for a reduced price). The scroll effects share one listener (`hooks/scrollEngine.js`) and switch off with "reduce motion".
+
+## Spacing
+
+The vertical space of the whole page is set in one file, `src/styles/spacing.css`, which is loaded last. Three numbers at the top control it: `--sec-y` (top and bottom space of a section), `--panel-y` (inside a rounded panel) and `--head-gap` (heading to content). Make them smaller for a tighter page or larger for a looser one. The same file shortens the INDEX scroll scene (`.ix-hs`).
 
 ## Motion
 
