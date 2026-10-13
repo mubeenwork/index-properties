@@ -1,57 +1,80 @@
 @layer components {
-  /* Header: transparent over the hero photo, solid after scrolling */
-  .ix-hdr { position: fixed; left: 0; right: 0; top: 0; z-index: 50; color: #fff; transition: transform .4s var(--ease), background .3s, color .3s, box-shadow .3s; }
-  .ix-hdr.solid { background: var(--bg); color: var(--ink); box-shadow: 0 1px 0 var(--line); }
-  :root[data-theme="dark"] .ix-hdr.solid { background: rgba(11, 11, 11, .85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-  .ix-hdr.hide { transform: translateY(-100%); }
-  .ix-hdr .ix-container { max-width: 1320px; display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 84px; }
+  /* ---------- Floating glass header ---------- */
+  .ix-hdr { position: fixed; left: 0; right: 0; top: 14px; z-index: 50; padding-inline: 16px; pointer-events: none; transition: transform .6s var(--ease), top .4s var(--ease); }
+  .ix-hdr.hide { transform: translateY(-140%); }
+  .ix-hdr.scrolled { top: 10px; }
+
+  .ix-pill {
+    pointer-events: auto; max-width: 1240px; margin: 0 auto; height: 66px; padding: 0 9px 0 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 18px; border-radius: 999px;
+    color: var(--ink); background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .45);
+    transition: background .5s var(--ease), color .4s, border-color .4s, height .4s var(--ease), box-shadow .4s;
+  }
+  /* over the hero photo: dark glass with white text */
+  .ix-hdr.on-hero .ix-pill { color: #fff; background: rgba(12, 12, 12, .34); border-color: rgba(255, 255, 255, .22); box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .6); }
+  .ix-hdr.scrolled .ix-pill { height: 58px; }
 
   .ix-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-  .ix-logo svg { width: 34px; height: 34px; }
-  .ix-logo b { font-weight: 800; font-size: 1.3rem; letter-spacing: .24em; }
+  .ix-logo svg { width: 32px; height: 32px; }
+  .ix-logo b { font-weight: 800; font-size: 1.2rem; letter-spacing: .24em; }
   .ix-red { fill: var(--brand); }
 
-  /* Desktop tabs (same tabs as indexrealtybrokerage.com) */
-  .ix-nav { display: flex; align-items: center; gap: 2px; font-weight: 700; font-size: .8rem; letter-spacing: .05em; text-transform: uppercase; }
-  .ix-nav > a, .ix-dd-b {
-    display: flex; align-items: center; gap: 7px; padding: 12px 14px; border: 0; font: inherit;
-    letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; text-decoration: none; white-space: nowrap;
-    background: linear-gradient(var(--brand), var(--brand)) 14px calc(100% - 6px) / 0 2px no-repeat;
-    transition: background-size .3s var(--ease);
+  /* Tabs (same tabs as indexrealtybrokerage.com) */
+  .ix-nav { position: relative; display: flex; align-items: center; gap: 0; font-weight: 700; font-size: .78rem; letter-spacing: .05em; text-transform: uppercase; }
+  .ix-hl {
+    position: absolute; left: 0; top: 50%; height: 40px; margin-top: -20px; border-radius: 999px; z-index: 0; pointer-events: none;
+    background: color-mix(in srgb, var(--brand) 14%, transparent); border: 1px solid color-mix(in srgb, var(--brand) 40%, transparent);
+    transition: transform .45s var(--ease), width .45s var(--ease), opacity .3s;
   }
-  .ix-nav > a:hover, .ix-dd-b:hover, .ix-dd.open .ix-dd-b, .ix-dd:hover .ix-dd-b { background-size: calc(100% - 28px) 2px; }
+  .ix-hdr.on-hero .ix-hl { background: rgba(255, 255, 255, .16); border-color: rgba(255, 255, 255, .3); }
+  .ix-nav > a, .ix-dd-b {
+    position: relative; z-index: 1; display: flex; align-items: center; gap: 7px; height: 40px; padding: 0 15px; border: 0; background: none;
+    font: inherit; letter-spacing: inherit; text-transform: inherit; color: inherit; cursor: pointer; text-decoration: none; white-space: nowrap;
+  }
+  /* the small dot that shows the section you are in */
+  .ix-nav > a.is-active::after, .ix-dd.is-active > .ix-dd-b::after {
+    content: ""; position: absolute; left: 50%; bottom: 3px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--brand);
+  }
+  .ix-hdr.on-hero .ix-nav > a.is-active::after, .ix-hdr.on-hero .ix-dd.is-active > .ix-dd-b::after { background: #fff; }
   .ix-dd { position: relative; }
   .ix-dd-b svg { width: 11px; height: 11px; transition: transform .3s var(--ease); }
   .ix-dd.open .ix-dd-b svg, .ix-dd:hover .ix-dd-b svg { transform: rotate(180deg); }
   .ix-dd-m {
-    position: absolute; left: 0; top: calc(100% + 8px); min-width: 240px; padding: 8px;
-    background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 14px;
-    box-shadow: 0 26px 50px -20px rgba(0, 0, 0, .55);
-    opacity: 0; visibility: hidden; transform: translateY(10px);
-    transition: opacity .25s, transform .35s var(--ease), visibility .25s;
-    z-index: 5; text-transform: none; letter-spacing: 0;
+    position: absolute; left: 50%; top: calc(100% + 16px); min-width: 250px; padding: 8px; margin-left: -125px;
+    background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 22px;
+    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .55);
+    opacity: 0; visibility: hidden; transform: translateY(12px) scale(.98); transform-origin: 50% 0;
+    transition: opacity .25s, transform .4s var(--ease), visibility .25s; z-index: 5; text-transform: none; letter-spacing: 0;
   }
-  .ix-dd-m::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+  .ix-dd-m::before { content: ""; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
   .ix-dd.open .ix-dd-m, .ix-dd:hover .ix-dd-m, .ix-dd:focus-within .ix-dd-m { opacity: 1; visibility: visible; transform: none; }
-  .ix-dd-m a { display: block; padding: 11px 14px; border-radius: 9px; font-weight: 600; font-size: .92rem; text-decoration: none; transition: background .2s, color .2s, padding .25s var(--ease); }
-  .ix-dd-m a:hover, .ix-dd-m a:focus-visible { background: var(--bg2); color: var(--brand); padding-left: 20px; }
+  .ix-dd-m a { display: block; padding: 11px 16px; border-radius: 14px; font-weight: 600; font-size: .92rem; text-decoration: none; transition: background .2s, color .2s, padding .25s var(--ease); }
+  .ix-dd-m a:hover, .ix-dd-m a:focus-visible { background: var(--bg2); color: var(--brand); padding-left: 22px; }
 
-  .ix-hdr-r { display: flex; align-items: center; gap: 12px; }
-  .ix-icon-btn { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(128, 128, 128, .55); background: transparent; cursor: pointer; border-radius: 50%; color: inherit; transition: border-color .2s, transform .4s var(--ease); }
-  .ix-icon-btn:hover { border-color: var(--brand); transform: rotate(20deg); }
+  .ix-hdr-r { display: flex; align-items: center; gap: 8px; }
+  .ix-icon-btn { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid color-mix(in srgb, currentColor 28%, transparent); background: transparent; cursor: pointer; border-radius: 50%; color: inherit; transition: border-color .2s, transform .5s var(--ease), background .2s; }
+  .ix-icon-btn:hover { border-color: var(--brand); transform: rotate(25deg); }
   .ix-icon-btn svg { width: 18px; height: 18px; }
   .ix-icon-btn .i-moon { display: none; }
   :root[data-theme="dark"] .ix-icon-btn .i-sun { display: none; }
   :root[data-theme="dark"] .ix-icon-btn .i-moon { display: block; }
-  .ix-login { padding: 11px 24px; border: 1.5px solid currentColor; border-radius: 8px; font-weight: 700; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; color: inherit; transition: background .2s, color .2s, border-color .2s; }
-  .ix-login:hover { background: var(--brand); border-color: var(--brand); color: #fff; }
+  /* Login is a solid red capsule with an arrow that nudges on hover */
+  .ix-login { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 22px; border-radius: 999px; background: var(--brand); color: #fff; font-weight: 800; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; transition: background .25s, box-shadow .3s, gap .3s var(--ease); }
+  .ix-login svg { width: 14px; height: 14px; transition: transform .3s var(--ease); }
+  .ix-login:hover { background: #111; color: #fff; }
+  .ix-login:hover svg { transform: translateX(3px); }
+  :root[data-theme="dark"] .ix-login:hover { background: var(--brand-hi); box-shadow: 0 0 0 4px rgba(239, 35, 60, .2), 0 0 26px rgba(239, 35, 60, .45); }
   .ix-burger { display: none; }
   @media (max-width: 1180px) {
-    .ix-nav, .ix-hdr .ix-login { display: none; }
+    .ix-nav, .ix-pill .ix-login { display: none; }
     .ix-burger { display: grid; }
+    .ix-pill { padding-left: 20px; height: 62px; }
   }
 
-  /* Mobile menu: Bootstrap Offcanvas + Accordion */
+  /* ---------- Mobile menu: Bootstrap Offcanvas + Accordion ---------- */
   .ix-offcanvas.offcanvas {
     --bs-offcanvas-height: 100vh;
     --bs-offcanvas-bg: var(--bg);
@@ -73,6 +96,6 @@
   .ix-acc .accordion-body { display: grid; padding: 4px 0 12px 14px; }
   .ix-acc .accordion-body a { padding: 10px 0; font-weight: 600; color: var(--muted); text-decoration: none; }
   .ix-acc .accordion-body a:hover { color: var(--brand); }
-  .ix-offcanvas .ix-login { margin-top: 24px; display: block; text-align: center; padding: 14px; font-size: .9rem; }
+  .ix-offcanvas .ix-login { margin-top: 24px; display: flex; justify-content: center; height: 54px; }
   .ix-offcanvas .btn-close { opacity: 1; }
 }

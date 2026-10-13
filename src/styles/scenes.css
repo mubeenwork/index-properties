@@ -1,84 +1,108 @@
 @layer components {
-  /* ---------- Hero scroll scene (HeroScroll.jsx) ---------- */
+  /* ---------- INDEX scroll scene (HeroScroll.jsx) ---------- */
   .ix-hs { position: relative; height: 220vh; }
   .ix-hs-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
-  .ix-hs .ix-hero { height: 100%; min-height: 0; }
-
-  .ix-hs:not(.still) .ix-hero-in { opacity: var(--h-o, 1); transform: translateY(var(--h-y, 0px)); }
-  .ix-hs:not(.still) .ix-hero-foot { opacity: var(--h-o, 1); }
-  .ix-hs:not(.still) .ix-slides { transform: scale(var(--h-s, 1)); }
+  .ix-hs .ix-hero { height: 100%; min-height: 0; border-radius: 0; }
+  .ix-hs:not(.still) .ix-hero-foot { opacity: var(--hp-o, 1); }
   .ix-hs[data-out="true"] .ix-hero-in { pointer-events: none; }
 
   .ix-hs-dark { position: absolute; inset: 0; z-index: 3; background: #050505; opacity: var(--dk, 0); pointer-events: none; }
-  .ix-hs-word {
-    position: absolute; inset: 0; z-index: 4; display: grid; place-content: center; justify-items: center; gap: 20px;
-    pointer-events: none; opacity: var(--w-o, 0);
-  }
+  .ix-hs-word { position: absolute; inset: 0; z-index: 4; display: grid; place-content: center; justify-items: center; gap: 20px; pointer-events: none; opacity: var(--w-o, 0); }
   /* The photo is only visible through the letters */
-  .ix-hs-word .w {
-    display: block; font-weight: 800; font-size: clamp(4.5rem, 25vw, 28rem); line-height: .85; letter-spacing: -.04em;
-    padding: .02em .06em; background-size: cover; background-position: 50% 40%;
-    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
-    transform: scale(var(--w-s, .9)); transform-origin: 50% 50%;
-  }
+  .ix-hs-word .w { display: block; font-weight: 800; font-size: clamp(4.5rem, 25vw, 28rem); line-height: .85; letter-spacing: -.04em; padding: .02em .06em; background-size: cover; background-position: 50% 40%; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; transform: scale(var(--w-s, .9)); transform-origin: 50% 50%; }
   .ix-hs-word .t { color: #fff; font-weight: 700; font-size: .85rem; letter-spacing: .42em; text-transform: uppercase; opacity: var(--t-o, 0); padding-left: .42em; }
-
   .ix-hs-cue { position: absolute; left: 50%; bottom: 64px; z-index: 5; transform: translateX(-50%); display: grid; justify-items: center; gap: 8px; color: rgba(255, 255, 255, .85); font-weight: 700; font-size: .68rem; letter-spacing: .24em; text-transform: uppercase; opacity: var(--cue, 1); pointer-events: none; }
   .ix-hs-cue i { display: block; width: 1px; height: 38px; background: linear-gradient(#fff, transparent); transform-origin: 50% 0; animation: ix-cue 1.8s ease-in-out infinite; }
   @keyframes ix-cue { 0% { transform: scaleY(0); } 55% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
-
+  /* reduce motion: a normal hero with no pinning */
   .ix-hs.still { height: auto; }
   .ix-hs.still .ix-hs-stage { position: relative; height: auto; overflow: visible; }
-  .ix-hs.still .ix-hero { height: auto; min-height: 100svh; }
+  .ix-hs.still .ix-hero { height: 100svh; min-height: 640px; border-radius: 0 0 44px 44px; }
 
-  /* ---------- "Why Index" statement ---------- */
-  /* Pulled up over the end of the pinned hero, so the white section rises over the wordmark instead of leaving a dark gap */
-  .ix-statement { position: relative; z-index: 6; background: var(--bg); margin-top: -26vh; padding-block: 140px 110px; box-shadow: 0 -40px 80px rgba(0, 0, 0, .3); }
-  .ix-hs.still + .ix-statement { margin-top: 0; box-shadow: none; }
-  @media (max-width: 760px) { .ix-statement { padding-block: 100px 80px; } }
+  /* ---------- "Why Index": statement + bento grid of reasons ---------- */
+  /* pulled up over the end of the pinned scene, so it rises over the wordmark instead of leaving a gap */
+  .ix-statement { position: relative; z-index: 6; background: var(--bg); margin-top: -26vh; border-radius: 44px 44px 0 0; box-shadow: 0 -40px 80px rgba(0, 0, 0, .3); padding-block: 120px 100px; }
+  .ix-hs.still + .ix-statement { margin-top: 0; border-radius: 0; box-shadow: none; }
+  @media (max-width: 760px) { .ix-statement { padding-block: 84px 64px; } }
+
+  .ix-why-head { display: flex; justify-content: space-between; align-items: end; gap: 28px 64px; flex-wrap: wrap; margin-bottom: 44px; }
+  .ix-why-title { display: grid; gap: 14px; }
+  .ix-why-title .ix-h2 { font-size: clamp(2.2rem, 4.8vw, 3.8rem); line-height: 1.05; }
+  .ix-why-side { display: grid; gap: 20px; justify-items: start; max-width: 460px; }
+  .ix-why-lead { font-size: 1.12rem; line-height: 1.6; font-weight: 600; letter-spacing: -.01em; }
+  .ix-pillbtn { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 24px; border-radius: 999px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font-weight: 800; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: background .3s, color .3s, border-color .3s; }
+  .ix-pillbtn svg { width: 16px; height: 16px; transition: transform .35s var(--ease); }
+  .ix-pillbtn:hover { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .ix-pillbtn:hover svg { transform: translateX(4px); }
 
   /* Text that fills in word by word (ScrollWords.jsx) */
-  .ix-scrollwords .wd { color: color-mix(in srgb, var(--ink) 20%, transparent); transition: color .45s var(--ease); }
+  .ix-scrollwords .wd { color: color-mix(in srgb, var(--ink) 22%, transparent); transition: color .45s var(--ease); }
   .ix-scrollwords .wd.on { color: var(--ink); }
-  .ix-big { margin-top: 22px; max-width: 22em; font-size: clamp(1.8rem, 3.8vw, 3.1rem); line-height: 1.24; font-weight: 700; letter-spacing: -.035em; }
 
-  .ix-strips { display: flex; height: clamp(340px, 36vw, 520px); margin: 64px -1.5% 0; }
-  .ix-strip {
-    position: relative; flex: 1 1 0; min-width: 0; height: 100%; overflow: hidden; margin-inline: -1.6%; cursor: default;
-    clip-path: polygon(16% 0, 100% 0, 84% 100%, 0 100%);
-    transform: translateY(calc((1 - var(--s, 1)) * 90px)); opacity: calc(.15 + var(--s, 1) * .85);
-    transition: flex .8s var(--ease), filter .5s var(--ease);
+  /* The tiles: one big, two small, one wide */
+  .ix-why-grid {
+    display: grid; gap: 16px; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(200px, 17vw, 260px);
+    grid-template-areas: "a a b stat" "a a d d";
   }
-  .ix-strip img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
-  .ix-strip .cap {
-    position: absolute; left: 0; right: 0; bottom: 0; padding: 70px 24% 26px; text-align: center;
-    background: linear-gradient(0deg, rgba(0, 0, 0, .78), rgba(0, 0, 0, 0));
-    color: #fff; font-weight: 700; font-size: 1rem; letter-spacing: -.01em;
-    opacity: 0; transform: translateY(18px); transition: opacity .45s var(--ease), transform .6s var(--ease);
-  }
-  .ix-strip .cap::before { content: ""; display: block; width: 34px; height: 3px; background: var(--brand); margin: 0 auto 10px; }
+  .ix-wt.a { grid-area: a; } .ix-wt.b { grid-area: b; } .ix-wt.stat { grid-area: stat; } .ix-wt.d { grid-area: d; }
 
-  /* Hover: the strip under the mouse widens and its photo zooms, the others dim, its name slides up */
-  @media (hover: hover) and (min-width: 701px) {
-    .ix-strips:hover .ix-strip { filter: brightness(.5) saturate(.85); }
-    .ix-strips .ix-strip:hover { flex: 1.9 1 0; filter: none; }
-    .ix-strip:hover img { transform: scale(1.08); }
-    .ix-strip:hover .cap { opacity: 1; transform: none; }
-  }
+  .ix-wt { position: relative; min-width: 0; border-radius: 32px; overflow: hidden; color: #fff; background: #17171a; isolation: isolate; }
+  .ix-wt > img { position: absolute; left: 0; top: -6%; width: 100%; height: 112%; object-fit: cover; translate: 0 var(--py, 0px); transition: transform 1.2s var(--ease); }
+  .ix-wt:not(.stat)::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .1) 58%, rgba(0, 0, 0, .28) 100%); }
+  .ix-wt:not(.stat):hover > img { transform: scale(1.07); }
+  .ix-wt-num { position: absolute; left: 20px; top: 18px; z-index: 2; font-weight: 800; font-size: .78rem; letter-spacing: .14em; padding: 6px 12px; border-radius: 999px; background: rgba(0, 0, 0, .4); border: 1px solid rgba(255, 255, 255, .26); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .ix-wt-body { position: absolute; left: 24px; right: 84px; bottom: 22px; z-index: 2; display: grid; gap: 6px; }
+  .ix-wt-body h3 { font-size: clamp(1.15rem, 1.7vw, 1.5rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.15; }
+  .ix-wt.a .ix-wt-body h3 { font-size: clamp(1.7rem, 3vw, 2.6rem); max-width: 14ch; }
+  .ix-wt-body p { font-size: .9rem; color: rgba(255, 255, 255, .82); max-width: 34ch; max-height: 0; opacity: 0; overflow: hidden; transition: max-height .6s var(--ease), opacity .5s var(--ease); }
+  .ix-wt.a .ix-wt-body p { max-height: 6em; opacity: 1; }
+  .ix-wt:hover .ix-wt-body p { max-height: 6em; opacity: 1; }
+  .ix-wt-go { position: absolute; right: 18px; bottom: 18px; z-index: 3; width: 50px; height: 50px; border-radius: 50%; border: 0; padding: 0; cursor: pointer; display: grid; place-items: center; background: #fff; color: #0b0b0b; transition: transform .5s var(--ease), background .3s, color .3s; }
+  .ix-wt-go svg { width: 20px; height: 20px; transform: rotate(-45deg); transition: transform .5s var(--ease); }
+  .ix-wt:hover .ix-wt-go { background: var(--brand); color: #fff; transform: scale(1.08); }
+  .ix-wt:hover .ix-wt-go svg { transform: rotate(0); }
 
-  @media (max-width: 700px) {
-    .ix-strips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
-    .ix-strip { height: auto; aspect-ratio: 3 / 3.8; }
-    .ix-strip .cap { opacity: 1; transform: none; padding-top: 40px; font-size: .85rem; }
+  .ix-wt-go:focus-visible { outline: 3px solid #ff3b4e; outline-offset: 3px; }
+  .ix-wt.stat .ix-wt-go:hover, .ix-wt.stat:hover .ix-wt-go { background: #0b0b0b; color: #fff; }
+  .ix-wt.stat .ix-wt-body { right: 84px; }
+
+  /* Modal extras */
+  .ix-why-modal-num { position: absolute; left: 18px; top: 18px; z-index: 2; padding: 7px 14px; border-radius: 999px; background: rgba(12, 12, 12, .62); color: #fff; font-weight: 800; font-size: .78rem; letter-spacing: .12em; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .ix-why-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .ix-why-points li { position: relative; padding-left: 28px; font-weight: 600; font-size: .96rem; }
+  .ix-why-points li::before { content: ""; position: absolute; left: 0; top: .32em; width: 16px; height: 16px; border-radius: 50%; background: var(--brand) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 10px no-repeat; }
+
+  /* The red number tile */
+  .ix-wt.stat { background: linear-gradient(145deg, #d0021b, #8f0112); }
+  :root[data-theme="dark"] .ix-wt.stat { background: linear-gradient(145deg, #b5121b, #6f0912); }
+  .ix-wt.stat::after { content: ""; position: absolute; right: -70px; top: -70px; width: 220px; height: 220px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 0 0 36px rgba(255, 255, 255, .05); pointer-events: none; }
+  .ix-wt.stat .ix-wt-num { background: rgba(255, 255, 255, .16); border-color: rgba(255, 255, 255, .32); }
+  .ix-stat-big { position: absolute; left: 24px; top: 54px; z-index: 2; display: flex; align-items: baseline; gap: 10px; }
+  .ix-stat-big b { font-size: clamp(3rem, 4.2vw, 4rem); font-weight: 800; line-height: .9; letter-spacing: -.05em; font-variant-numeric: lining-nums tabular-nums; }
+  .ix-stat-big > span { font-weight: 700; font-size: 1.05rem; opacity: .85; }
+  .ix-wt.stat .ix-wt-body { right: 24px; }
+  .ix-wt.stat .ix-wt-body p { max-height: 5em; opacity: 1; }
+
+  /* Touch screens have no hover, so the text is always shown */
+  @media (hover: none) { .ix-wt-body p { max-height: 6em; opacity: 1; } }
+
+  @media (max-width: 900px) {
+    .ix-why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 210px; grid-template-areas: "a a" "a a" "b stat" "d d"; }
+  }
+  @media (max-width: 520px) {
+    .ix-why-grid { gap: 12px; grid-auto-rows: 190px; }
+    .ix-wt { border-radius: 24px; }
+    .ix-wt-body { left: 18px; right: 68px; bottom: 16px; }
+    .ix-wt-go { width: 44px; height: 44px; right: 14px; bottom: 14px; }
+    .ix-wt-num { left: 14px; top: 14px; }
+    .ix-stat-big { left: 18px; top: 52px; }
   }
 
   /* Parallax images (ParallaxImg.jsx): a small drift inside the frame */
-  .ix-svc img, .ix-portrait img { scale: 1.08; translate: 0 var(--py, 0px); }
-  .ix-banner > img { scale: 1.12; translate: 0 var(--py, 0px); }
+  .ix-svc img, .ix-banner > img { scale: 1.1; translate: 0 var(--py, 0px); }
 
   @media (prefers-reduced-motion: reduce) {
-    .ix-hs-cue i { animation: none; }
-    .ix-strip { transform: none; opacity: 1; }
-    .ix-svc img, .ix-portrait img, .ix-banner > img { scale: 1; translate: none; }
+    .ix-wt > img { translate: none; }
+    .ix-svc img, .ix-banner > img { scale: 1; translate: none; }
   }
 }

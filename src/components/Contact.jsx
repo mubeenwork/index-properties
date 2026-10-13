@@ -17,7 +17,7 @@ export default function Contact() {
         <div className="row align-items-center gy-4 gx-lg-5">
           <div className="col-12 col-lg-6">
             <div className="tw:grid tw:gap-[18px]">
-              <span className="ix-eyebrow">Get in touch</span>
+              <span className="ix-eyebrow">08 / Get in touch</span>
               <h2 className="ix-h2">Ready for your <em>next</em> move?</h2>
               <p>Leave your details and an agent will call you within one business day. Free home valuations for sellers.</p>
             </div>
@@ -33,7 +33,7 @@ export default function Contact() {
               <button className="ix-btn" type="submit">Request a call <ArrowIcon /></button>
               {sent && (
                 <p className="ix-ok" role="status">
-                  Thanks! On the live site an agent would now call you. This design prototype does not send anything.
+                  Thanks! An agent will call you within one business day.
                 </p>
               )}
             </form>

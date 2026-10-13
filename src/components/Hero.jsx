@@ -17,10 +17,10 @@ export default function Hero({ onSearch, onSell }) {
   const [type, setType] = useState('all')
   const [address, setAddress] = useState('')
 
-  // Advance every 5.5s. The timer restarts whenever the slide changes (also after a dot click).
+  // Advance every 6.5s. The timer restarts whenever the slide changes (also after a dot click).
   useEffect(() => {
     if (prefersReducedMotion()) return
-    const id = setTimeout(() => setSlide((s) => (s + 1) % HERO_SLIDES.length), 5500)
+    const id = setTimeout(() => setSlide((s) => (s + 1) % HERO_SLIDES.length), 6500)
     return () => clearTimeout(id)
   }, [slide])
 
@@ -85,11 +85,13 @@ export default function Hero({ onSearch, onSell }) {
       </div>
 
       <div className="ix-hero-foot">
+        <span className="ix-hero-tag">Index Realty · Brokerage</span>
         <div className="ix-hdots">
           {HERO_SLIDES.map((s, i) => (
             <button key={s.src} type="button" aria-label={`Photo ${i + 1}`} aria-current={i === slide} onClick={() => setSlide(i)}><i /></button>
           ))}
         </div>
+        <span className="ix-hero-count"><b>{String(slide + 1).padStart(2, '0')}</b> / {String(HERO_SLIDES.length).padStart(2, '0')}</span>
       </div>
     </section>
   )

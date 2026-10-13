@@ -1,6 +1,8 @@
 const money = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 })
 
 export const formatPrice = (n) => money.format(n)
+/** '$1,249,000' for a sale, '$2,650 /mo' for a rental */
+export const priceLabel = (item) => formatPrice(item.price) + (item.mode === 'rent' ? ' /mo' : '')
 
 export const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches

@@ -6,10 +6,10 @@ import Reveal from './Reveal'
 /** Three photo tiles. Bootstrap grid: 1 column on phones, 3 from tablet up. */
 export default function Services() {
   return (
-    <section className="ix-sec alt" id="services">
+    <section className="ix-sec ix-services" id="services">
       <div className="ix-container">
         <div className="ix-head">
-          <span className="ix-eyebrow">What we do</span>
+          <span className="ix-eyebrow">04 / What we do</span>
           <h2 className="ix-h2">Here for every <em>move</em></h2>
         </div>
         <div className="row g-4">

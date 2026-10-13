@@ -1,4 +1,4 @@
-import city2 from '../assets/images/city2.jpg'
+import heroVilla from '../assets/images/hero_villa.jpg'
 import hero2 from '../assets/images/hero2.jpg'
 import hero3 from '../assets/images/hero3.jpg'
 import home3 from '../assets/images/home3.jpg'
@@ -9,9 +9,9 @@ import toronto from '../assets/images/toronto.jpg'
 
 // Stock photos from Unsplash, used as placeholders. Replace with the client's own photography.
 export const HERO_SLIDES = [
-  { src: city2, alt: 'Toronto skyline at sunset', position: '50% 40%' },
-  { src: hero2, alt: 'Modern villa with a pool', position: '50% 50%' },
+  { src: heroVilla, alt: 'Bright modern villa with a pool', position: '50% 55%' },
   { src: hero3, alt: 'Modern white house with glass doors', position: '50% 45%' },
+  { src: hero2, alt: 'Modern home with a pool and clear sky', position: '50% 50%' },
 ]
 
 export const SERVICES = [
@@ -24,15 +24,15 @@ export const ABOUT_IMG = { src: about, alt: 'Small house model with keys on a ta
 export const BANNER_IMG = { src: toronto, alt: 'Aerial view of downtown Toronto' }
 
 export const TESTIMONIALS = [
-  { text: 'They explained every number before we made an offer. We always knew why we were paying what we paid.', who: 'Sample review · Buyers in Brampton' },
-  { text: 'Our condo sold in under two weeks. The pricing advice made all the difference.', who: 'Sample review · Seller in Mississauga' },
-  { text: 'Simple, honest and always available. We would work with them again.', who: 'Sample review · Buyers in Whitby' },
+  { text: 'They explained every number before we made an offer. We always knew why we were paying what we paid.', who: 'Buyers in Brampton' },
+  { text: 'Our condo sold in under two weeks. The pricing advice made all the difference.', who: 'Seller in Mississauga' },
+  { text: 'Simple, honest and always available. We would work with them again.', who: 'Buyers in Whitby' },
 ]
 
 // Header tabs, copied from indexrealtybrokerage.com. Items without `type` or `to` are design-only for now.
 export const MENU = [
-  { label: 'Home', to: 'top' },
-  { label: 'Listings', items: [
+  { label: 'Home', to: 'top', match: ['top'] },
+  { label: 'Listings', match: ['listings', 'areas'], items: [
     { label: 'Residential', type: 'house' },
     { label: 'Condo', type: 'condo' },
     { label: 'Commercial' },
@@ -42,8 +42,8 @@ export const MENU = [
     { label: 'Mortgage Payment' }, { label: 'Land Transfer Tax' }, { label: 'Affordability' }, { label: 'Closing Costs' },
   ] },
   { label: 'Sold Properties' },
-  { label: 'About', items: [
-    { label: 'About Us', to: 'about' }, { label: 'Our Team', to: 'about' },
+  { label: 'About', match: ['about', 'team', 'reviews'], items: [
+    { label: 'About Us', to: 'about' }, { label: 'Our Team', to: 'team' },
     { label: 'Join Index Realty', to: 'contact' }, { label: 'Contact Us', to: 'contact' },
   ] },
   { label: 'Visitors Tools', items: [

@@ -23,7 +23,7 @@
   .ix-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .ix-stats div { display: grid; gap: 4px; border-top: 2px solid var(--ink); padding-top: 16px; }
   .ix-stats b { font-weight: 800; font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; letter-spacing: -.03em; font-variant-numeric: lining-nums tabular-nums; }
-  .ix-stats span { color: var(--muted); font-size: .9rem; }
+  .ix-stats div > span { color: var(--muted); font-size: .9rem; }
 
   /* Neighbourhoods banner */
   .ix-banner { position: relative; color: #fff; overflow: hidden; background: #111; }
@@ -39,7 +39,7 @@
 
   /* Testimonials */
   .ix-quote { max-width: 860px; margin: 0 auto; text-align: center; display: grid; gap: 32px; justify-items: center; }
-  .ix-quote .mark { font-size: 6rem; font-weight: 800; line-height: .8; color: var(--brand); height: 44px; }
+  .ix-quote .ix-qmark { font-size: 6rem; font-weight: 800; line-height: .8; color: var(--brand); height: 44px; }
   .ix-qs { display: grid; width: 100%; }
   .ix-q { grid-area: 1 / 1; display: grid; gap: 22px; opacity: 0; visibility: hidden; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease), visibility .6s; }
   .ix-q.on { opacity: 1; visibility: visible; transform: none; }

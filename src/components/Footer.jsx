@@ -1,20 +1,20 @@
-import useInView from '../hooks/useInView'
 import { scrollToId } from '../utils'
 import { LogoMark } from './icons'
 
 const LINKS = [
   { label: 'Buy', to: 'listings' },
-  { label: 'Sell', to: 'services' },
+  { label: 'Neighbourhoods', to: 'areas' },
+  { label: 'Services', to: 'services' },
   { label: 'About', to: 'about' },
   { label: 'Contact', to: 'contact' },
 ]
 
+/** A compact footer: logo, links and contact on one row, then the legal line. */
 export default function Footer({ onReplay }) {
-  const [ref, inView] = useInView({ threshold: 0.35, rootMargin: '0px' })
   const go = (e, to) => { e.preventDefault(); scrollToId(to) }
 
   return (
-    <footer ref={ref} className={`ix-foot ${inView ? 'in' : ''}`}>
+    <footer className="ix-foot">
       <div className="ix-container">
         <div className="top">
           <a className="ix-logo" href="#top" aria-label="Back to top" onClick={(e) => go(e, 'top')}>
@@ -28,26 +28,13 @@ export default function Footer({ onReplay }) {
           </ul>
           <div className="contact">
             <span>Mississauga, Ontario</span>
-            <span>info@indexrealtybrokerage.com</span>
+            <a href="mailto:info@indexrealtybrokerage.com">info@indexrealtybrokerage.com</a>
           </div>
         </div>
 
-        <div className="ix-giant" aria-label="Index">
-          {'INDEX'.split('').map((ch, i) => (
-            <span key={i} style={{ '--i': i }} aria-hidden="true">{ch}</span>
-          ))}
-          <span style={{ '--i': 5 }} aria-hidden="true"><em>.</em></span>
-        </div>
-
         <div className="ix-legal">
-          <p>
-            REALTOR® and MLS® are trademarks of CREA. Design prototype: listings and reviews are samples. Photos from{' '}
-            <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>, used as placeholders.
-          </p>
-          <span className="tw:flex tw:flex-wrap tw:items-center tw:gap-3.5">
-            <button type="button" onClick={onReplay}>Replay intro</button>
-            <span>© 2026 Index Realty Brokerage</span>
-          </span>
+          <span>© 2026 Index Realty Brokerage</span>
+          <button type="button" onClick={onReplay}>Replay intro</button>
         </div>
       </div>
     </footer>

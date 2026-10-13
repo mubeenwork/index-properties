@@ -8,6 +8,7 @@ import Statement from './components/Statement'
 import Listings from './components/Listings'
 import Services from './components/Services'
 import About from './components/About'
+import Team from './components/Team'
 import Neighbourhoods from './components/Neighbourhoods'
 import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
@@ -56,9 +57,10 @@ export default function App() {
         <SectionTransition>
           <Listings filters={filters} onFilters={setFilters} onContact={() => scrollToId('contact')} />
         </SectionTransition>
+        <SectionTransition><Neighbourhoods onPick={(city) => showListings({ city })} /></SectionTransition>
         <SectionTransition><Services /></SectionTransition>
         <SectionTransition><About /></SectionTransition>
-        <SectionTransition><Neighbourhoods onPick={(city) => showListings({ city })} /></SectionTransition>
+        <SectionTransition><Team /></SectionTransition>
         <SectionTransition><Testimonials /></SectionTransition>
         <SectionTransition><Contact /></SectionTransition>
       </main>

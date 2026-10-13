@@ -1,27 +1,38 @@
 @layer components {
-  /* Hero: full-bleed photo slider */
-  .ix-hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center; color: #fff; overflow: hidden; background: #0b0b0b; }
-  .ix-slides { position: absolute; inset: 0; }
-  .ix-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+  /* ---------- Hero: a rounded frame filled edge to edge by one photo ---------- */
+  .ix-hero-frame { padding: 0; }
+  .ix-hero {
+    position: relative; height: 100vh; height: 100svh; min-height: 640px;
+    display: grid; place-items: center; color: #fff; overflow: hidden; isolation: isolate; background: #101010;
+    border-radius: 0 0 var(--hp-r, 44px) var(--hp-r, 44px);
+  }
+  /* The photos fill the whole frame. The slide layer is a little taller than the frame so the parallax never shows an edge. */
+  .ix-slides { position: absolute; left: 0; right: 0; top: -8%; bottom: -8%; transform: translate3d(0, var(--hp-y, 0px), 0) scale(var(--hp-z, 1)); will-change: transform; }
+  .ix-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s var(--ease-io); }
   .ix-slide.on { opacity: 1; }
-  .ix-slide img { width: 100%; height: 100%; object-fit: cover; }
-  .ix-slide.on img { animation: ix-kb 9s ease-out both; }
-  @keyframes ix-kb { from { transform: scale(1.12); } to { transform: scale(1); } }
-  .ix-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, .38) 38%, rgba(0, 0, 0, .62) 100%); }
-  .ix-hero-in { position: relative; z-index: 2; width: 100%; max-width: 820px; padding: 130px 20px 90px; display: grid; justify-items: center; gap: 20px; text-align: center; }
-  .ix-hero h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2.3rem, 4.8vw, 4rem); line-height: 1.1; letter-spacing: -.035em; text-shadow: 0 2px 24px rgba(0, 0, 0, .4); }
+  .ix-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ix-slide.on img { animation: ix-kb 11s ease-out both; }
+  @keyframes ix-kb { from { transform: scale(1.08); } to { transform: scale(1); } }
+  /* A soft wash: a little dark at the top (header) and bottom (search), light in the middle so the photo stays bright and clean */
+  .ix-hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .42) 0%, rgba(0, 0, 0, .12) 32%, rgba(0, 0, 0, .18) 62%, rgba(0, 0, 0, .58) 100%);
+  }
+
+  .ix-hero-in { position: relative; z-index: 2; width: 100%; max-width: 820px; padding: 120px 20px 110px; display: grid; justify-items: center; gap: 20px; text-align: center; opacity: var(--hp-o, 1); transform: translate3d(0, var(--hp-ty, 0px), 0); }
+  .ix-hero h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(2.4rem, 5.2vw, 4.4rem); line-height: 1.08; letter-spacing: -.035em; text-shadow: 0 2px 30px rgba(0, 0, 0, .35); }
   .ix-hero h1 .l { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
   .ix-hero h1 .l > span { display: inline-block; }
   .ix-hero h1 em { font-style: normal; color: #ff3b4e; }
-  .ix-hero .sub { font-size: 1.05rem; max-width: 44ch; color: #fff; text-shadow: 0 1px 14px rgba(0, 0, 0, .6); }
+  .ix-hero .sub { font-size: 1.05rem; max-width: 44ch; color: #fff; text-shadow: 0 1px 14px rgba(0, 0, 0, .55); }
 
-  .ix-modes { display: inline-flex; gap: 4px; padding: 4px; background: rgba(0, 0, 0, .35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 999px; margin-top: 8px; }
-  .ix-mode { padding: 10px 28px; border: 0; border-radius: 999px; background: transparent; color: #fff; font-weight: 700; font-size: .9rem; cursor: pointer; transition: background .25s, color .25s; }
+  .ix-modes { display: inline-flex; gap: 4px; padding: 4px; background: rgba(0, 0, 0, .32); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, .18); border-radius: 999px; margin-top: 6px; }
+  .ix-mode { padding: 10px 28px; border: 0; border-radius: 999px; background: transparent; color: #fff; font-weight: 700; font-size: .9rem; cursor: pointer; transition: background .3s, color .3s; }
   .ix-mode:hover { background: rgba(255, 255, 255, .18); }
   .ix-mode[aria-selected="true"] { background: #fff; color: #0b0b0b; }
 
-  .ix-search { display: flex; flex-wrap: wrap; width: 100%; max-width: 700px; background: #fff; color: #0b0b0b; border-radius: 6px; overflow: hidden; box-shadow: 0 20px 50px -20px rgba(0, 0, 0, .6); }
-  .ix-fld { flex: 1 1 170px; display: grid; padding: 10px 20px; min-width: 0; text-align: left; }
+  .ix-search { display: flex; flex-wrap: wrap; width: 100%; max-width: 700px; background: #fff; color: #0b0b0b; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .65); }
+  .ix-fld { flex: 1 1 170px; display: grid; padding: 12px 22px; min-width: 0; text-align: left; }
   .ix-fld + .ix-fld { border-left: 1px solid #e6e6e6; }
   .ix-fld label { font-weight: 700; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: #626262; }
   .ix-fld select, .ix-fld input { border: 0; background: transparent; font-weight: 700; padding: 3px 0; outline: none; width: 100%; color: #0b0b0b; }
@@ -31,9 +42,14 @@
   .ix-search .ix-btn { padding-inline: 32px; font-size: .78rem; }
   @media (max-width: 620px) { .ix-search .ix-btn { flex: 1 1 100%; padding-block: 18px; } .ix-fld + .ix-fld { border-left: 0; border-top: 1px solid #e6e6e6; } }
 
-  .ix-hero-foot { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 2; display: flex; justify-content: center; }
+  .ix-hero-foot { position: absolute; left: 28px; right: 96px; bottom: 24px; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; opacity: var(--hp-o, 1); }
   .ix-hdots { display: flex; gap: 8px; }
-  .ix-hdots button { width: 42px; height: 4px; border: 0; padding: 0; background: rgba(255, 255, 255, .35); cursor: pointer; position: relative; overflow: hidden; }
+  .ix-hdots button { width: 46px; height: 4px; border: 0; padding: 0; background: rgba(255, 255, 255, .35); cursor: pointer; position: relative; overflow: hidden; border-radius: 4px; }
   .ix-hdots button i { position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: 0 50%; }
-  .ix-hdots button[aria-current="true"] i { animation: ix-prog 5.5s linear both; }
+  .ix-hdots button[aria-current="true"] i { animation: ix-prog 6.5s linear both; }
+  .ix-hero-count { font-weight: 700; font-size: .78rem; letter-spacing: .14em; font-variant-numeric: tabular-nums; }
+  .ix-hero-count b { font-size: 1.05rem; }
+  .ix-hero-tag { font-weight: 700; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; opacity: .85; }
+  @media (max-width: 640px) { .ix-hero-tag, .ix-hero-count { display: none; } .ix-hero-foot { right: 18px; justify-content: center; } .ix-hero-foot { justify-content: space-between; left: 18px; right: 18px; } .ix-hero-in { padding-top: 112px; } }
+  @media (prefers-reduced-motion: reduce) { .ix-slides { transform: none; } }
 }

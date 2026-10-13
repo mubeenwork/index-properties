@@ -38,12 +38,22 @@ src/
   hooks/scrollEngine.js    one shared scroll listener for the scroll scene, text fill and parallax
 ```
 
-## Scroll scene (inspired by findrealestate.com, not copied)
+## Section by section (each one has its own look)
 
-- **`HeroScroll.jsx`** pins the hero for about 2 screens. Scrolling lifts the headline away, darkens the photo, shows a giant INDEX wordmark with the city photo inside the letters, then grows it towards you while the next section rises over it. Each step is a number on a 0 to 1 scale written to CSS variables (`--h-o`, `--w-s` ...) and `styles/scenes.css` uses them. To retime it change the `seg(p, from, to)` ranges in `HeroScroll.jsx`. To make it shorter or longer change `height: 220vh` in `scenes.css`. For a gentler zoom lower the `6` in the `--w-s` line.
-- **`Statement.jsx`** ("Why Index"): `ScrollWords` fills a paragraph in word by word, then four slanted photo strips rise one after another. On hover the strip under the mouse widens, its photo zooms, the others dim and its name slides up (labels are in the `STRIPS` list at the top of the file).
-- **`ParallaxImg.jsx`**: photos drift a few pixels inside their frame (Services, About, the Toronto banner).
-- They share one scroll listener (`hooks/scrollEngine.js`). With "reduce motion" the pinned scene is skipped and the page is static.
+| # | Section | Look | Files |
+|---|---|---|---|
+| - | Header | floating glass pill, red highlight slides between tabs, dot shows the current section, dark glass over the hero and light glass elsewhere | `Header.jsx`, `styles/header.css` |
+| - | Hero + INDEX scene | full-screen photo slider that stays pinned for about two screens. Scrolling lifts the headline away, darkens the screen, shows a giant INDEX with the Toronto skyline inside the letters, then zooms it while Why Index rises over it. Retime it in `HeroScroll.jsx` (the seg ranges) and `height: 220vh` in `styles/scenes.css`; with reduce motion it is a plain hero | `Hero.jsx`, `HeroScroll.jsx`, `styles/hero.css` |
+| 01 | Why Index | short statement that fills in word by word, then a bento grid of four reasons (a big photo tile, two photo tiles and a red number tile). Small tiles open their text on hover | `Statement.jsx`, `ScrollWords.jsx`, `styles/scenes.css` |
+| 02 | Featured listings | **Property Showcase**: Sale / Rent tabs, search box, swipeable row of cards. Each card shows its number (01 / 08), the price (old price crossed out) and its offer | `Listings.jsx`, `ListingCard.jsx`, `styles/listings.css` |
+| 03 | Neighbourhoods | dark rounded panel with six expanding panels: hover, focus or tap a city and it opens wide with its photo, number of homes and an Explore button; the others become thin strips with a vertical name (stacked on phones) | `Neighbourhoods.jsx`, `styles/locations.css` |
+| 04 | What we do | soft grey rounded panel with three big photo tiles | `Services.jsx`, `styles/identity.css` |
+| 05 | About | red rounded panel with the broker photo, three promises and numbers | `About.jsx`, `styles/identity.css` |
+| 06 | Our team | a marquee: a row of agent cards slides sideways by itself and pauses on hover; social icons slide in on hover. Dummy agents and stock portraits in `src/data/team.js` | `Team.jsx`, `styles/team.css` |
+| 07 | Client stories | tinted band with one big rounded quote card | `Testimonials.jsx`, `styles/identity.css` |
+| 08 | Contact | black rounded panel with a red glow | `Contact.jsx`, `styles/identity.css` |
+
+To change what a listing shows, edit `src/data/listings.js` (`mode`: sale or rent, `offer`, `was` for a reduced price). The scroll effects share one listener (`hooks/scrollEngine.js`) and switch off with "reduce motion".
 
 ## Motion
 

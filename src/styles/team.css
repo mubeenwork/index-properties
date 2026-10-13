@@ -1,0 +1,44 @@
+@layer components {
+  /* ---------- Our team: a marquee of agent cards ---------- */
+  .ix-team { background: var(--bg); overflow: hidden; padding-bottom: 80px; }
+  .ix-team .ix-head-row { margin-bottom: 44px; }
+
+  /* The row slides sideways forever. The cards use a right margin (not a flex gap) so that
+     moving the track by exactly half its width lines the second copy up with the first. */
+  .ix-marquee { overflow: hidden; padding-block: 10px 6px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+  .ix-marquee-track { display: flex; width: max-content; animation: ix-marquee 56s linear infinite; will-change: transform; }
+  .ix-marquee:hover .ix-marquee-track, .ix-marquee:focus-within .ix-marquee-track { animation-play-state: paused; }
+  @keyframes ix-marquee { to { transform: translateX(-50%); } }
+
+  .ix-agent { flex: none; width: 280px; margin-right: 20px; }
+  .ix-agent-ph { position: relative; aspect-ratio: 4 / 5; border-radius: 30px; overflow: hidden; background: var(--bg2); }
+  .ix-agent-ph img { width: 100%; height: 100%; object-fit: cover; user-select: none; transition: transform 1s var(--ease), filter .5s; }
+  .ix-agent:hover .ix-agent-ph img { transform: scale(1.07); }
+  .ix-agent-ph::after { content: ""; position: absolute; inset: auto 0 0 0; height: 40%; background: linear-gradient(0deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0)); pointer-events: none; }
+  .ix-agent-tag { position: absolute; left: 14px; bottom: 14px; z-index: 2; padding: 7px 14px; border-radius: 999px; background: #fff; color: #0b0b0b; font-weight: 800; font-size: .72rem; letter-spacing: .02em; }
+
+  /* social icons: a red pill that slides in from the left on hover */
+  .ix-agent-social { position: absolute; left: 14px; top: 14px; z-index: 3; margin: 0; padding: 5px; list-style: none; display: flex; gap: 2px; border-radius: 999px; background: var(--brand); color: #fff; transform: translateY(-180%); opacity: 0; transition: transform .6s var(--ease), opacity .4s; }
+  .ix-agent:hover .ix-agent-social, .ix-agent:focus-within .ix-agent-social { transform: none; opacity: 1; }
+  .ix-agent-social a { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; color: #fff; transition: background .2s; }
+  .ix-agent-social a:hover { background: rgba(0, 0, 0, .25); color: #fff; }
+  .ix-agent-social svg { width: 19px; height: 19px; }
+  @media (hover: none) { .ix-agent-social { transform: none; opacity: 1; } }
+
+  .ix-agent-info { display: grid; gap: 3px; padding: 16px 6px 0; }
+  .ix-agent-info h3 { font-size: 1.15rem; font-weight: 800; letter-spacing: -.025em; }
+  .ix-agent-info span { color: var(--muted); font-size: .88rem; }
+  .ix-agent-tel { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; width: fit-content; color: var(--brand); font-weight: 700; font-size: .9rem; text-decoration: none; }
+  .ix-agent-tel svg { width: 16px; height: 16px; }
+  .ix-agent-tel:hover { color: var(--ink); }
+  .ix-team-note { text-align: center; margin-top: 26px; }
+
+  @media (max-width: 640px) { .ix-agent { width: 220px; margin-right: 14px; } .ix-agent-ph { border-radius: 24px; } }
+
+  /* Reduce motion: no sliding. The row can be scrolled by hand and shows each agent once. */
+  @media (prefers-reduced-motion: reduce) {
+    .ix-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .ix-marquee-track { animation: none; }
+    .ix-agent[aria-hidden="true"] { display: none; }
+  }
+}
